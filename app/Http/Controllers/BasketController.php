@@ -50,10 +50,10 @@ class BasketController extends Controller
     public function add(Request $request, Product $product)
     {
 
-        if(is_null(session('orderId'))){
-            $orderId = Order::create();
-            session(['orderId' => $orderId->id]);
-        }
+//        if(is_null(session('orderId'))){
+//            $orderId = Order::create();
+//            session(['orderId' => $orderId->id]);
+//        }
 
         if(!$product->isAvailable()){
             return redirect()->back()->with('warning', 'Product '.$product->title.', Only '.$product->stock.' items is available');

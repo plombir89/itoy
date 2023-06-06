@@ -15,7 +15,7 @@ class CreateOrderProductTable extends Migration
     {
         Schema::create('order_product', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
+            $table->foreignId('order_id')->references('id')->on('orders')->cascadeOnDelete();
             $table->integer('product_id');
             $table->integer('count')->default(1);
             $table->timestamps();

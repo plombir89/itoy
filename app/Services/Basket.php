@@ -18,16 +18,10 @@ class Basket
      */
     public function __construct()
     {
-
-        $orderId = session('orderId');
-        //$this->order = Order::find($orderId);
-
-        $this->order = Order::findOr($orderId, function () {
-
+        if(is_null(session('orderId')) || !Order::find(session('orderId'))){
             $orderId = Order::create();
             session(['orderId' => $orderId->id]);
-
-        });
+        }
     }
 
     /**
