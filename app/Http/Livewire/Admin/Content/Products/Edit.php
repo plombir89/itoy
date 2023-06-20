@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Content\Products;
 
 use App\Models\Language;
+use App\Models\ProductCategory;
 use App\Models\ProductCategoryData;
 use App\Models\ProductSubCategoryData;
 use Carbon\Carbon;
@@ -22,34 +23,44 @@ class Edit extends Component
     public $tab_active_second = 0;
 
     public $categories;
-    public $sub_categories;
+
+    public $selected_categories = [];
 
     public function mount()
     {
-        $this->categories = ProductCategoryData::where('lang', Language::defaultLang()->id)->get();
-        $this->sub_categories = ProductSubCategoryData::where('lang', Language::defaultLang()->id)->get();
+        $this->categories = ProductCategory::query()->where('parent_id' , null)->with(['item' => function($query){
+            $query->where('lang', Language::defaultLang()->id);
+        }])->get();
+
+        foreach ($this->product->category as $category){
+            if(!in_array($category->pivot->category_id,$this->selected_categories)){
+                $this->selected_categories[] = $category->pivot->category_id;
+            }
+        }
     }
 
     protected $rules = [
         'product.published' => 'boolean',
-        'product.category_id' => 'required|exists:product_categories,id',
-        'product.sub_category' => 'nullable|exists:product_sub_categories,id',
+        'product.featured' => 'boolean',
+        'product.special' => 'boolean',
+        'product.product_price' => 'required|integer',
+        'product.product_discount' => 'required|integer',
+        'product.stock' => 'required|integer',
         'product.items.*.title' => 'required|string|max:255',
         'product.items.*.text' => 'string',
-        'product.items.*.content' => 'string',
-        'product.model' => 'required|string|max:255',
-        'product.watt' => 'string'
+        'product.code' => 'required|string|max:255'
     ];
 
     protected $validationAttributes = [
         'product.items.*.title' => 'title',
         'product.items.*.text' =>'text',
-        'product.items.*.content' =>'content',
         'product.published' => 'published',
-        'product.category_id' => 'category',
-        'product.sub_category' => 'sub category',
-        'product.model' => 'required|string|max:255',
-        'product.watt' => 'string'
+        'product.featured' => 'featured',
+        'product.special' => 'special',
+        'product.product_price' => 'price',
+        'product.product_discount' => 'discount',
+        'product.stock' => 'stock',
+        'product.code' => 'product code'
     ];
 
     public function updated($propertyName)
@@ -64,12 +75,13 @@ class Edit extends Component
             ],[],[
             'product.items.*.title' => __('title'),
             'product.items.*.text' => __('text'),
-            'product.items.*.content' => __('content'),
             'product.published' => __('published'),
-            'product.category_id' => __('category'),
-            'product.sub_category' => __('sub category'),
-            'product.model' => __('model'),
-            'product.watt' => __('watt')
+            'product.featured' => __('featured'),
+            'product.special' => __('special'),
+            'product.product_price' => __('price'),
+            'product.product_discount' => __('discount'),
+            'product.stock' => __('stock'),
+            'product.code' => __('model'),
         ]);
 
         if($this->img){
@@ -88,17 +100,17 @@ class Edit extends Component
         }
         unset($this->product->items);
 
-        if($this->product->sub_category == ''){
-            $this->product->sub_category = null;
-        }
+        $this->product->category()->sync($this->selected_categories);
 
-        if($this->product->watt == ''){
-            $this->product->watt = null;
-        }
+        $this->product->price = $this->product->product_price;
+        $this->product->discount = $this->product->product_discount;
 
+        unset($this->product->product_price);
+        unset($this->product->product_discount);
         $this->product->save();
 
-
+        $this->product->product_price =  $this->product->getRawOriginal('price');
+        $this->product->product_discount =  $this->product->getRawOriginal('discount');
 
         $this->emit('updated', ['title' => __('Product'), 'text' => __('Product was updated')]);
     }

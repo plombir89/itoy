@@ -23,9 +23,9 @@
         <svg class="icon" viewBox="0 0 40 40"><use xlink:href="#cart-responsive" x="13%" y="13%"></use></svg>
       </span>
       <span class="cart-content">
-        <span class="cart-name">Shopping Cart</span>
+        <span class="cart-name">{{ __('Shopping Cart') }}</span>
         <span class="cart-products-count hidden-sm hidden-xs">
-            {{ $order->products->count() }} items
+            {{ $order->products->count() }} {{ __('items') }}
         </span>
         <span class="cart-products-count hidden-lg hidden-md">
             {{ $order->products->count() }}
@@ -46,12 +46,12 @@
                             </td>
                             <td class="text-left col-md-7 col-sm-7 col-xs-7">
                                 <span class="quantity-formated">{{ $product->pivot->count }} x</span>
-                                <a class="cart_block_product_name" href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=product/product&amp;product_id=28">{{ $product->item->title }}</a>
+                                <a class="cart_block_product_name" href="{{ route('product.show', [app()->getLocale(), $product->item->slug]) }}">{{ $product->item->title }}</a>
                                 <span class="text-price text-left">{{ $product->price }} MDL</span>
                             </td>
 
                             <td class="text-center col-md-1 col-sm-1 col-xs-1">
-                                <button type="button" onclick="cart.remove({{ $product->id }});" title="Remove" class="btn btn-danger btn-xs">
+                                <button type="button" onclick="cart.remove({{ $product->id }});" title="{{ __('Remove') }}" class="btn btn-danger btn-xs">
                                     <i class="fa fa-times"></i>
                                 </button>
                             </td>
@@ -63,23 +63,23 @@
                 <div>
                     <table class="table billing-info">
                         <tr>
-                            <td class="text-left"><strong>Sub-Total</strong></td>
+                            <td class="text-left"><strong>{{ __('Sub-Total') }}</strong></td>
                             <td class="text-right value">{{ $order->getSubPrice() }} MDL</td>
                         </tr>
                         <tr>
-                            <td class="text-left"><strong>Total</strong></td>
+                            <td class="text-left"><strong>{{ __('Total') }}</strong></td>
                             <td class="text-right value">{{ $order->getFullPrice() }} MDL</td>
                         </tr>
                     </table>
                     <div class="text-center cart-btn">
-                        <a href="{{ route('basket') }}"><button type="button" class="btn btn-default btn-cartblock"> View Cart</button></a>&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('checkout') }}"><button type="button" class="btn btn-primary btn-cartblock"> Checkout</button></a>
+                        <a href="{{ route('basket') }}"><button type="button" class="btn btn-default btn-cartblock"> {{ __('View Cart') }}</button></a>&nbsp;&nbsp;&nbsp;
+                        <a href="{{ route('checkout') }}"><button type="button" class="btn btn-primary btn-cartblock"> {{ __('Checkout') }}</button></a>
                     </div>
                 </div>
             </li>
         @else
             <li>
-                <p class="empty text-left">Your shopping cart is empty!</p>
+                <p class="empty text-left">{{ __('Your shopping cart is empty!') }}</p>
             </li>
         @endif
     </ul>

@@ -165,6 +165,11 @@ var cart = {
 					location = json['redirect'];
 				}
 
+                if (json['warning']) {
+
+                    $.notify({message:json.warning},{type:"warning",offset:0,placement:{from:"top",align:"center"},z_index: 9999,animate:{enter:"animated fadeInDown",exit:"animated fadeOutUp"},template:'<div data-notify="container" class="col-xs-12 alert alert-{0}" role="alert"><button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button><span data-notify="icon"></span> <span data-notify="title">{1}</span> <span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>'});
+                }
+
 				if (json['success']) {
 					/*$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					$('html, body').animate({ scrollTop: 0 }, 'slow');*/
@@ -287,9 +292,12 @@ var voucher = {
 var wishlist = {
 	'add': function(product_id) {
 		$.ajax({
-			url: 'index.php?route=account/wishlist/add',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+			url: '/wishlist/add/' + product_id,
 			type: 'post',
-			data: 'product_id=' + product_id,
+			data: '',
 			dataType: 'json',
 			success: function(json) {
 				$('.alert-dismissible').remove();
@@ -308,7 +316,9 @@ var wishlist = {
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                if(xhr.status === 401){
+                    $.notify({message:xhr.responseJSON.message},{type:"success",offset:0,placement:{from:"top",align:"center"},z_index: 9999,animate:{enter:"animated fadeInDown",exit:"animated fadeOutUp"},template:'<div data-notify="container" class="col-xs-12 col-sm-12 alert alert-{0}" role="alert"><button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button><span data-notify="icon"></span> <span data-notify="title">{1}</span> <span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>'});
+                }
 			}
 		});
 	},

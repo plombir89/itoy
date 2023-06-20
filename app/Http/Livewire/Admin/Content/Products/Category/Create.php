@@ -12,8 +12,15 @@ class Create extends Component
     public $category;
     public $category_data;
 
+    public $categories;
+    public $parent;
+
     public function mount()
     {
+        $this->categories = ProductCategory::query()->with(['item' => function($query){
+            $query->where('lang', Language::defaultLang()->id);
+        }])->get();
+
         $category = new ProductCategory();
 
         foreach (Language::getAdminLangs() as $lang){
@@ -23,16 +30,19 @@ class Create extends Component
             ]);
         }
 
+        $this->parent = null;
         $this->category = $category;
         $this->category_data = $category_data;
     }
 
     protected $rules = [
         'category_data.*.title' => 'required|string|max:255',
+        'parent' => 'nullable|integer'
     ];
 
     protected $validationAttributes = [
-        'category_data.*.title' => 'title'
+        'category_data.*.title' => 'title',
+        'parent' => 'parent'
     ];
 
     public function updated($propertyName)
@@ -44,13 +54,15 @@ class Create extends Component
     {
         $data = $this->validate([
             'category_data.*.title' => 'required|string|max:255',
+            'parent' => 'nullable|integer'
         ],[],[
-            'category_data.*.title' => __('title')
+            'category_data.*.title' => __('title'),
+            'parent' => __('Parent')
         ]);
 
         //dd($data);
 
-        $category = ProductCategory::create();
+        $category = ProductCategory::create(['parent_id' => $data['parent']]);
 
         foreach ($data['category_data'] as $index => $item){
             ProductCategoryData::create([

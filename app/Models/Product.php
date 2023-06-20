@@ -34,6 +34,18 @@ class Product extends Model
         return $this->hasMany(ProductImages::class, 'product_id', 'id');
     }
 
+//    public function price(): Attribute
+//    {
+//        return Attribute::make(
+//            get: fn (string $value, array $attributes) => $attributes['discount'] > 0 ? $attributes['discount'] : $value
+//        );
+//    }
+//    public function discount(): Attribute
+//    {
+//        return Attribute::make(
+//            get: fn (string $value, array $attributes) => $value == 0 ? $value : $attributes['price']
+//        );
+//    }
     public function getPriceAttribute($value)
     {
         return $this->attributes['discount'] > 0 ? $this->attributes['discount'] : $value;
@@ -43,6 +55,7 @@ class Product extends Model
     {
         return $value == 0 ? $value : $this->attributes['price'];
     }
+
 
     public function getPriceFrom()
     {
@@ -59,7 +72,7 @@ class Product extends Model
     }
 
     public function isAvailable(){
-        return true;
+        return $this->stock > 0;
     }
 
     public function scopeFeatured(Builder $query): void

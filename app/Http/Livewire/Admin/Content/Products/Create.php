@@ -4,12 +4,14 @@ namespace App\Http\Livewire\Admin\Content\Products;
 
 use App\Models\Language;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductCategoryData;
 use App\Models\ProductData;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use function PHPUnit\Framework\assertClassNotHasAttribute;
 
 class Create extends Component
 {
@@ -22,21 +24,29 @@ class Create extends Component
 
     public $categories;
 
+    public $selected_categories = [];
+
     public function mount()
     {
-        $this->categories = ProductCategoryData::where('lang', Language::defaultLang()->id)->get();
+
+        $this->categories = ProductCategory::query()->where('parent_id' , null)->with(['item' => function($query){
+            $query->where('lang', Language::defaultLang()->id);
+        }])->get();
 
         $product = new Product([
             'published' => false,
-            'model' => '',
-            'category_id' => $this->categories[0]->category_id ?? null
+            'adminprice' => '',
+            'admindiscount' => '',
+            'stock' => 1,
+            'featured' => 0,
+            'special' => 0,
+            'code' => ''
         ]);
 
         foreach (Language::getAdminLangs() as $lang){
             $product_data[$lang->id] = new ProductData([
                 'title' => '',
                 'text' => '',
-                'content' => '',
                 'icon' => $lang->icon
             ]);
         }
@@ -47,20 +57,26 @@ class Create extends Component
 
     protected $rules = [
         'product.published' => 'boolean',
-        'product.category_id' => 'required|exists:product_categories,id',
         'product_data.*.text' => 'string',
         'product_data.*.title' => 'required|string|max:255',
-        'product.model' => 'required|string|max:255',
-        'product_data.*.content' => 'string',
+        'product.code' => 'required|string|max:255',
+        'product.adminprice' => 'required|integer',
+        'product.admindiscount' => 'required|integer',
+        'product.stock' => 'required|integer',
+        'product.featured' => 'boolean',
+        'product.special' => 'boolean',
     ];
 
     protected $validationAttributes = [
         'product.published' => 'published',
-        'product.model' => 'model',
-        'product.category_id' => 'category',
+        'product.code' => 'code',
+        'product.adminprice' => 'price',
+        'product.admindiscount' => 'discount',
+        'product.stock' => 'stock',
+        'product.featured' => 'featured',
+        'product.special' => 'special',
         'product_data.*.title' => 'title',
         'product_data.*.text' => 'text',
-        'product_data.*.content' => 'content'
     ];
 
     public function updated($propertyName)
@@ -75,28 +91,36 @@ class Create extends Component
         ],[],[
             'product_data.*.title' => __('title'),
             'product_data.*.text' => __('text'),
-            'product_data.*.content' => __('content'),
             'product.published' => __('published'),
-            'product.model' => __('model'),
-            'product.category_id' => __('category')
+            'product.code' => __('model'),
+            'product.adminprice' => __('price'),
+            'product.admindiscount' => __('discount'),
+            'product.stock' => __('stock'),
+            'product.featured' => __('featured'),
+            'product.special' => __('special'),
         ]);
 
-        //dd($data);
+        //dd($this->selected_categories);
 
         $image = $this->img->store('products');
 
         $product = Product::create([
             'published' => $data['product']['published'],
-            'model' => $data['product']['model'],
-            'category_id' => $data['product']['category_id'],
+            'code' => $data['product']['code'],
+            'price' => $data['product']['adminprice'],
+            'discount' => $data['product']['admindiscount'],
+            'stock' => $data['product']['stock'],
+            'featured' => $data['product']['featured'],
+            'special' => $data['product']['special'],
             'img' => $image
         ]);
+
+        $product->category()->sync($this->selected_categories);
 
         foreach ($data['product_data'] as $index => $item){
             ProductData::create([
                 'title' => $item['title'],
                 'text' => $item['text'],
-                'content' => $item['content'],
                 'slug' => Str::slug($item['title']),
                 'lang' => $index,
                 'product_id' => $product->id

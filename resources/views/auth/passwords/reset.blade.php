@@ -1,98 +1,44 @@
-@extends('layouts.app')
+@extends('front.layouts.main')
 
 @section('content')
-    <section class="body-sign">
-        <div class="center-sign">
-            <a href="/" class="logo float-left">
-                <img src="img/logo.png" height="54" alt="Porto Admin" />
-            </a>
+    <div id="account-forgotten" class="container">
+        <div class="wrapper_container row">
+            <aside id="column-left" class="col-sm-3 hidden-xs">
+                @include('front.blocks.categories')
 
-            <div class="panel card-sign">
-                <div class="card-title-sign mt-3 text-right">
-                    <h2 class="title text-uppercase font-weight-bold m-0"><i class="bx bx-user-circle mr-1 text-6 position-relative top-5"></i> Recover Password</h2>
+                @include('front.blocks.banner')
+
+                @include('front.blocks.new-products')
+            </aside>
+
+            <div id="content" class="col-md-9 col-sm-12 col-xs-12">
+                <div class="breadcrumb-container">
+                    <h1 class="page-title">Forgot Your Password?</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=common/home"><i class="fa fa-home"></i></a></li>
+                        <li><a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=account/account">Account</a></li>
+                        <li><a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=account/forgotten">Forgotten Password</a></li>
+                    </ul>
                 </div>
-                <div class="card-body">
-                    <div class="alert alert-info">
-                        <p class="m-0">Enter your e-mail below and we will send you reset instructions!</p>
+                <p>Enter the e-mail address associated with your account. Click submit to have a password reset link e-mailed to you.</p>
+                <form action="https://demo.ishithemes.com/opencart/OPC073/index.php?route=account/forgotten" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <fieldset>
+                        <legend>Your E-Mail Address</legend>
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="input-email">E-Mail Address</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="email" value="" placeholder="E-Mail Address" id="input-email" class="form-control">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="buttons clearfix">
+                        <div class="pull-left"><a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=account/login" class="btn btn-default">Back</a></div>
+                        <div class="pull-right">
+                            <input type="submit" value="Continue" class="btn btn-primary">
+                        </div>
                     </div>
-
-                    <form>
-                        <div class="form-group mb-0">
-                            <div class="input-group">
-                                <input name="username" type="email" placeholder="E-mail" class="form-control form-control-lg" />
-                                <span class="input-group-append">
-										<button class="btn btn-primary btn-lg" type="submit">Reset!</button>
-									</span>
-                            </div>
-                        </div>
-
-                        <p class="text-center mt-3">Remembered? <a href="pages-signin.html">Sign In!</a></p>
-                    </form>
-                </div>
-            </div>
-
-            <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2017. All Rights Reserved.</p>
-        </div>
-    </section>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
 @endsection

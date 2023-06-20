@@ -9,6 +9,7 @@
                     <thead>
                     <th>ID</th>
                     <th>{{ __('Title') }}</th>
+                    <th>{{ __('Parent') }}</th>
                     <th>{{ __('Created') }}</th>
                     <th>{{ __('Actions') }}</th>
                     </thead>

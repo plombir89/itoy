@@ -5,26 +5,7 @@
         <div class="row">
             <div class="wrapper_container">
                 <aside id="column-left" class="col-sm-3 hidden-xs">
-                    <div class="box">
-                        <h2 class="page-title hidden-sm hidden-xs">
-                            Categories
-                        </h2>
-                        <div class="block-title clearfix  hidden-lg hidden-md collapsed" data-target="#box-container"
-                             data-toggle="collapse">
-                            <span class="page-title">Categories</span>
-                            <span class="navbar-toggler collapse-icons">
-                                <i class="fa fa-angle-down add"></i>
-                                <i class="fa fa-angle-up remove"></i>
-                            </span>
-                        </div>
-                        <div id="box-container" class="collapse data-toggler">
-                            <ul class="category-top-menu">
-
-                                @include('front.blocks.categories')
-
-                            </ul>
-                        </div>
-                    </div>
+                    @include('front.blocks.categories')
 
                     <div class="filterbox">
                         <div class="page-title hidden-sm hidden-xs">Refine Search</div>
@@ -32,9 +13,9 @@
                              data-target="#filterbox-container" data-toggle="collapse">
                             <span class="page-title">Refine Search</span>
                             <span class="navbar-toggler collapse-icons">
-      <i class="fa fa-angle-down add"></i>
-      <i class="fa fa-angle-up remove"></i>
-    </span>
+                          <i class="fa fa-angle-down add"></i>
+                          <i class="fa fa-angle-up remove"></i>
+                        </span>
                         </div>
                         <div id="filterbox-container" class="collapse data-toggler">
                             <div class="list-group-filter">
@@ -119,29 +100,19 @@
                         });
                         //--></script>
 
-                    <section id="ishibannerblock-1770620958" class="ishibannerblock one_bannerblock">
-                        <div class="bannerblock col-md-12 col-sm-12 col-xs-12">
-                            <div class="image-container">
-                                <a href="#" class="ishi-customhover-fadeinflip ">
-                                    <img
-                                        src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/Left-banner-345x417.jpg"
-                                        alt="" class="img-responsive">
+                    @include('front.blocks.banner')
 
-                                </a>
-                            </div>
-                        </div>
-                    </section>
                     @include('front.blocks.new-products')
                 </aside>
 
                 <div id="content" class="col-md-9 col-sm-12 col-xs-12">
                     <div class="breadcrumb-container">
-                        <h2 class="page-title">Products</h2>
+                        <h2 class="page-title">{{ __('Products') }}</h2>
                         <ul class="breadcrumb">
                             <li><a href="{{ route('home') }}"><i
                                         class="fa fa-home"></i></a></li>
                             <li>
-                                <a href="{{ route('product.index', app()->getLocale()) }}">Products</a>
+                                <a href="{{ route('product.index', app()->getLocale()) }}">{{ __('Products') }}</a>
                             </li>
                         </ul>
                     </div>
@@ -163,16 +134,16 @@
                                 <div class="pagination-right">
                                     <div class="sort-by-wrapper">
                                         <div class="col-md-2 text-right sort-by">
-                                            <label class="control-label" for="input-sort">Sort By:</label>
+                                            <label class="control-label" for="input-sort">{{ __('Sort By') }}:</label>
                                         </div>
                                         <div class="col-md-3 text-right sort">
                                             <div class="select-wrapper">
                                                 <select id="input-sort" class="form-control"
                                                         onchange="location = this.value;">
-                                                    <option value="{{ \request()->fullUrlWithQuery(['sort' => null]) }}" selected="selected">Default</option>
+                                                    <option value="{{ \request()->fullUrlWithQuery(['sort' => null]) }}" selected="selected">{{ __('Default') }}</option>
 
-                                                    <option @if(\request()->input('sort') == 'price.asc') selected="selected" @endif value="{{ \request()->fullUrlWithQuery(['sort' => 'price.asc']) }}">Price (Low &gt; High)</option>
-                                                    <option @if(\request()->input('sort') == 'price.desc') selected="selected" @endif value="{{ \request()->fullUrlWithQuery(['sort' => 'price.desc']) }}">Price (High &gt; Low)</option>
+                                                    <option @if(\request()->input('sort') == 'price.asc') selected="selected" @endif value="{{ \request()->fullUrlWithQuery(['sort' => 'price.asc']) }}">{!! __('Price (Low &gt; High)') !!}</option>
+                                                    <option @if(\request()->input('sort') == 'price.desc') selected="selected" @endif value="{{ \request()->fullUrlWithQuery(['sort' => 'price.desc']) }}">{!! __('Price (High &gt; Low)') !!}</option>
 
                                                 </select>
                                             </div>
@@ -180,7 +151,7 @@
                                     </div>
                                     <div class="show-wrapper">
                                         <div class="col-md-1 text-right show">
-                                            <label class="control-label" for="input-limit">Show:</label>
+                                            <label class="control-label" for="input-limit">{{ __('Show') }}:</label>
                                         </div>
                                         <div class="col-md-2 text-right limit">
                                             <div class="select-wrapper">
@@ -211,26 +182,11 @@
                                                  title="{{ $product->item->title }}" class="img-responsive">
                                         </a>
                                         <div class="rating">
-
-                                          <span class="fa fa-stack">
-                                            <i class="fa fa-star yellow fa-stack-2x"></i>
-                                          </span>
-
-                                                            <span class="fa fa-stack">
-                                            <i class="fa fa-star yellow fa-stack-2x"></i>
-                                          </span>
-
-                                                            <span class="fa fa-stack">
-                                            <i class="fa fa-star yellow fa-stack-2x"></i>
-                                          </span>
-
-                                                            <span class="fa fa-stack">
-                                            <i class="fa fa-star gray fa-stack-2x"></i>
-                                          </span>
-
-                                                            <span class="fa fa-stack">
-                                            <i class="fa fa-star gray fa-stack-2x"></i>
-                                          </span>
+                                            @for($i = 1;$i <= 5; $i++)
+                                                <span class="fa fa-stack">
+                                                    <i class="fa fa-star @if($i <= $product->rating) yellow @else gray @endif fa-stack-2x"></i>
+                                                </span>
+                                            @endfor
                                         </div>
 
 
@@ -238,23 +194,20 @@
                                     <div class="caption">
                                         <h4>
                                             <a href="{{ route('product.show', [app()->getLocale(), $product->item['slug']]) }}">{{ $product->item->title }}</a></h4>
-                                        <p class="description">The 30-inch Apple Cinema HD Display delivers an amazing
-                                            2560 x 1600 pixel resolution. Designed speci..</p>
+                                        <p class="description">{{ Str::limit(strip_tags($product->item->text), 150) }}</p>
                                         <p class="price">
                                             @if($product['discount'] > 0)
                                                 <span class="price-new">{{ $product['price'] }} MDL</span> <span class="price-old">{{ $product['discount'] }} MDL</span>
                                             @else
                                                 {{ $product['price'] }} MDL
                                             @endif
-
-                                            <span class="price-tax">Ex Tax: $100.00</span>
                                         </p>
                                         <div class="button-group">
 
                                             <div class="btn-wishlist">
                                                 <button type="button" data-toggle="tooltip" title=""
                                                         onclick="wishlist.add({{ $product->id }});"
-                                                        data-original-title="Add to Wish List"><i
+                                                        data-original-title="{{ __('Add to Wish List') }}"><i
                                                         class="fa fa-heart"></i>
                                                     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                                                         <symbol id="heart-shape-outline" viewBox="0 0 1150 1150"><title>
@@ -272,7 +225,7 @@
 
                                             <div class="btn-cart">
                                                 <button type="button" data-toggle="tooltip" title=""
-                                                        onclick="cart.add({{ $product->id }});" data-original-title="Add to Cart">
+                                                        onclick="cart.add({{ $product->id }});" data-original-title="{{ __('Add to Cart') }}">
                                                     <div class="button-cart">
                                                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                                                             <symbol id="addtocart" viewBox="0 0 1050 1050"><title>
@@ -293,7 +246,7 @@
                                                             <use xlink:href="#addtocart" x="25%" y="25%"></use>
                                                         </svg>
                                                     </div>
-                                                    <span class="lblcart">Add to Cart</span>
+                                                    <span class="lblcart">{{ __('Add to Cart') }}</span>
                                                 </button>
                                             </div>
                                         </div>

@@ -27,6 +27,9 @@ class IndexController extends Controller
     {
         $product = Product::where('id', $product)->with('items.language')->firstOrFail();
 
+        $product->product_price = $product->getRawOriginal('price');
+        $product->product_discount = $product->getRawOriginal('discount');
+
         return view('admin.content.products.edit', compact('product'));
     }
 
@@ -48,8 +51,7 @@ class IndexController extends Controller
         $columns = [
             1 => 'title',
             2 => 'published',
-            3 => 'cat_title',
-            4 => 'created_at',
+            3 => 'created_at',
         ];
 
         $limit = $request->input('length');
@@ -82,10 +84,8 @@ class IndexController extends Controller
         $news = $query
             ->join('product_data', 'product_data.product_id', '=', 'products.id')
             ->join('languages', 'languages.id', '=', 'product_data.lang')
-            ->join('product_categories', 'product_categories.id', '=', 'products.category_id')
-            ->join('product_category_data', 'product_category_data.category_id', '=', 'product_categories.id')
-            ->select([DB::raw("SQL_CALC_FOUND_ROWS products.id,products.published,products.created_at,product_data.title,product_category_data.title as cat_title")])
-            ->where(["product_data.lang" => $lang, 'product_category_data.lang' => $lang])
+            ->select([DB::raw("SQL_CALC_FOUND_ROWS products.id,products.published,products.created_at,product_data.title")])
+            ->where(["product_data.lang" => $lang])
             ->orderBy($order, $dir)->take($limit)->offset($start)->get();
 
 
@@ -106,7 +106,6 @@ class IndexController extends Controller
                 $item->id,
                 $item->title,
                 $status,
-                $item->cat_title,
                 Carbon::create($item->created_at)->translatedFormat('d M, Y'),
                 $actions
             ];

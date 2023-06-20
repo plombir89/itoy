@@ -4,34 +4,10 @@
     <div id="checkout" class="container">
         <div class="wrapper_container row">
             <aside id="column-left" class="col-sm-3 hidden-xs">
-                <div class="box">
-                    <h2 class="page-title hidden-sm hidden-xs">
-                        Categories
-                    </h2>
-                    <div class="block-title clearfix  hidden-lg hidden-md collapsed" data-target="#box-container" data-toggle="collapse">
-                        <span class="page-title">Categories</span>
-                        <span class="navbar-toggler collapse-icons">
-                          <i class="fa fa-angle-down add"></i>
-                          <i class="fa fa-angle-up remove"></i>
-                    </span>
-                    </div>
-                    <div id="box-container" class="collapse data-toggler">
-                        <ul class="category-top-menu">
-                            @include('front.blocks.categories')
-                        </ul>
-                    </div>
-                </div>
+                @include('front.blocks.categories')
 
-                <section id="ishibannerblock-1684559940" class="ishibannerblock one_bannerblock">
-                    <div class="bannerblock col-md-12 col-sm-12 col-xs-12">
-                        <div class="image-container">
-                            <a href="#" class="ishi-customhover-fadeinflip ">
-                                <img src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/Left-banner-345x417.jpg" alt="" class="img-responsive">
+                @include('front.blocks.banner')
 
-                            </a>
-                        </div>
-                    </div>
-                </section>
                 @include('front.blocks.new-products')
             </aside>
 
@@ -40,8 +16,8 @@
                     <h1 class="page-title">Checkout</h1>
                     <ul class="breadcrumb">
                         <li><a href="{{ route('home') }}"><i class="fa fa-home"></i></a></li>
-                        <li><a href="{{ route('basket') }}">Shopping Cart</a></li>
-                        <li><a href="{{ route('checkout') }}">Checkout</a></li>
+                        <li><a href="{{ route('basket') }}">{{ __('Shopping Cart') }}</a></li>
+                        <li><a href="{{ route('checkout') }}">{{ __('Checkout') }}</a></li>
                     </ul>
                 </div>
                 <div class="panel-collapse collapse in" id="collapse-checkout-confirm" aria-expanded="true" style="">
@@ -49,11 +25,11 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td class="text-left">Product Name</td>
-                                    <td class="text-left">Code</td>
-                                    <td class="text-right">Quantity</td>
-                                    <td class="text-right">Unit Price</td>
-                                    <td class="text-right">Total</td>
+                                    <td class="text-left">{{ __('Product Name') }}</td>
+                                    <td class="text-left">{{ __('Code') }}</td>
+                                    <td class="text-right">{{ __('Quantity') }}</td>
+                                    <td class="text-right">{{ __('Unit Price') }}</td>
+                                    <td class="text-right">{{ __('Total') }}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -71,11 +47,11 @@
                                 <tfoot>
 
                                 <tr>
-                                    <td colspan="4" class="text-right"><strong>Sub-Total:</strong></td>
+                                    <td colspan="4" class="text-right"><strong>{{ __('Sub-Total') }}:</strong></td>
                                     <td class="text-right">{{ $order->getSubPrice() }} MDL</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-right"><strong>Total:</strong></td>
+                                    <td colspan="4" class="text-right"><strong>{{ __('Total') }}:</strong></td>
                                     <td class="text-right">{{ $order->getFullPrice() }} MDL</td>
                                 </tr>
                                 </tfoot>

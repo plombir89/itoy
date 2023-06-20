@@ -11,6 +11,7 @@ class Role extends Model
 
     const SUPER_ADMIN = 1;
     const ADMIN = 2;
+    const USER = 3;
 
     protected $table = 'roles';
 

@@ -12,6 +12,7 @@ use App\Services\Basket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use function Symfony\Component\HttpKernel\DataCollector\getMessage;
 
 class BasketController extends Controller
 {
@@ -56,13 +57,39 @@ class BasketController extends Controller
 //        }
 
         if(!$product->isAvailable()){
-            return redirect()->back()->with('warning', 'Product '.$product->title.', Only '.$product->stock.' items is available');
+
+            $response = [
+                'warning' => 'Product <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>, out of stock',
+            ];
+
+            if ($request->isMethod('GET')) {
+                return redirect()->back()->with('warning', $response);
+            }
+
+            return response()->json($response);
+
+            //return redirect()->back()->with('warning', 'Product '.$product->title.', Only '.$product->stock.' items is available');
         }
 
         $basket = new Basket();
 
-        $basket->addProduct($product);
+        try {
+            $basket->addProduct($product);
+        }catch (\Exception $e){
+
+            $response = [
+                'warning' => 'Product <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>, Only '.$product->stock.' items is available',
+            ];
+
+            if ($request->isMethod('GET')) {
+                return redirect()->back()->with('warning', $response['warning']);
+            }
+
+            return response()->json($response);
+        }
+
         $order = (new Basket())->getOrder();
+
         $response = [
             'success' => 'Success: You have added <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a> to your <a href="'.route('basket').'\">shopping cart</a>!',
             'total' => 'item',

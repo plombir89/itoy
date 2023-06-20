@@ -10,11 +10,13 @@ class ContactsForm extends Component
     public $name;
     public $email;
     public $phone;
+    public $message;
 
     protected $rules = [
         'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
-        'email' => 'required|email',
-        'name' => 'required|string|min:3'
+        'email' => 'nullable|email',
+        'name' => 'required|string|min:3',
+        'message' => 'required|string|min:25',
     ];
 
     public function updated($propertyName)
@@ -27,7 +29,7 @@ class ContactsForm extends Component
 
         $data = $this->validate();
 
-        Mail::send(new \App\Mail\ContactsForm($data['name'],$data['email'],$data['phone']));
+        Mail::send(new \App\Mail\ContactsForm($data['name'],$data['email'],$data['phone'],$data['message']));
 
         $this->reset();
 

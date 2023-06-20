@@ -365,8 +365,8 @@
 
         $("#datatable-products").dataTable({
             aoColumnDefs: [
-                {"aTargets": [0,4], "sClass" : "center"},
-                {"aTargets": [0,5], "bSortable": false}
+                {"aTargets": [0,3], "sClass" : "center"},
+                {"aTargets": [0,4], "bSortable": false}
             ],
             "processing": true,
             "serverSide": true,
@@ -426,14 +426,14 @@
                 }
             },
             aaSorting: [
-                [4, 'desc']
+                [3, 'desc']
             ]
         });
 
         $("#datatable-product-categories").dataTable({
             aoColumnDefs: [
-                {"aTargets": [0,3], "sClass" : "center"},
-                {"aTargets": [0,3], "bSortable": false}
+                {"aTargets": [0,4], "sClass" : "center"},
+                {"aTargets": [0,2,4], "bSortable": false}
             ],
             "processing": true,
             "serverSide": true,
@@ -493,7 +493,7 @@
                 }
             },
             aaSorting: [
-                [2, 'desc']
+                [3, 'desc']
             ]
         });
 

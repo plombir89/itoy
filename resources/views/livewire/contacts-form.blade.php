@@ -1,38 +1,47 @@
-<div>
-<h5>{{ __('Get a pricing quote for a residential or business solar panel installation') }}</h5>
-<!-- RD Mailform-->
-<form class="text-center offset-top-30" >
-    <div class="form-wrap">
-        <label class="form-label" for="contact-name1"></label>
-        <input class="form-input" id="contact-name1" wire:model="name" placeholder="{{ __('Your Name') }}" >
-        @error('name')
-            <span class="form-validation">{{ $message }}</span>
-        @enderror
-    </div>
-    <div class="form-wrap">
-        <label class="form-label" for="contact-email1"></label>
-        <input class="form-input" id="contact-email1"  wire:model="email" placeholder="{{ __('Email') }}" >
-        @error('email')
-        <span class="form-validation">{{ $message }}</span>
-        @enderror
-    </div>
-    <div class="form-wrap">
-        <label class="form-label" for="contact-phone1"></label>
-        <input class="form-input" id="contact-phone1" wire:model="phone" placeholder="{{ __('Phone') }}" >
-        @error('phone')
-        <span class="form-validation">{{ $message }}</span>
-        @enderror
-    </div>
-
-    @if(session()->has('messageSent'))
-        <div class="messages">
-            {{ session('messageSent') }}
+<form action="/contact" method="post" class="form-horizontal">
+    <fieldset>
+        <legend>Contact Form</legend>
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-name">{{ __('Your Name') }}</label>
+            <div class="col-sm-10">
+                <input type="text" wire:model="name" id="input-name" class="form-control">
+                @error('name')
+                    <span class="form-validation">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
-    @endif
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-email">{{ __('E-Mail Address') }}</label>
+            <div class="col-sm-10">
+                <input type="text" wire:model="email" id="input-email" class="form-control">
+                @error('email')
+                    <span class="form-validation">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-phone">{{ __('Phone') }}</label>
+            <div class="col-sm-10">
+                <input type="text" wire:model="phone" id="input-phone" class="form-control">
+                @error('phone')
+                    <span class="form-validation">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-enquiry">{{ __('Message') }}</label>
+            <div class="col-sm-10">
+                <textarea wire:model="message" rows="5" id="input-enquiry" class="form-control"></textarea>
+                @error('message')
+                    <span class="form-validation">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
 
-    <div wire:loading wire:target="send" class="offset-top-30">
-        <img src="{{ asset('assets/images/preloader.gif') }}" alt="">
+    </fieldset>
+    <div class="buttons">
+        <div class="pull-right">
+            <input class="btn btn-primary" type="submit" wire:click.prevent="send" wire:loading.class="hidden" value="{{ __('Submit') }}">
+        </div>
     </div>
-    <button class="btn btn-primary offset-top-30" type="submit" wire:click.prevent="send" wire:loading.class="hidden">{{ __('GET A QUOTE') }}</button>
 </form>
-</div>

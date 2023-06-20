@@ -43,12 +43,80 @@
                     @endforeach
 
                     <div class="form-group row">
-                        <label class="col-sm-2 control-label text-sm-right">{{ __('Model') }}</label>
+                        <label class="col-sm-2 control-label text-sm-right">{{ __('Product code') }}</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" wire:model.debounce.lazy="product.model" class="form-control @error('product.model') error @enderror"/>
+                                <input type="text" wire:model.debounce.lazy="product.code" class="form-control @error('product.code') error @enderror"/>
                             </div>
-                            @error('product.model')
+                            @error('product.code')
+                            <label class="error text-color-danger" for="">{{ $message }}</label>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right">{{ __('Price') }}</label>
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                <input type="text" wire:model="product.product_price" class="form-control @error('product.product_price') error @enderror"/>
+                            </div>
+                            @error('product.product_price')
+                            <label class="error text-color-danger" for="">{{ $message }}</label>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right">{{ __('Discount') }}</label>
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                <input type="text" wire:model="product.product_discount" class="form-control @error('product.product_discount') error @enderror"/>
+                            </div>
+                            @error('product.product_discount')
+                            <label class="error text-color-danger" for="">{{ $message }}</label>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right">{{ __('Stock') }}</label>
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                <input type="text" wire:model.debounce.lazy="product.stock" class="form-control @error('product.stock') error @enderror"/>
+                            </div>
+                            @error('product.stock')
+                            <label class="error text-color-danger" for="">{{ $message }}</label>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right"></label>
+                        <div class="col-sm-2">
+                            <div class="checkbox-custom checkbox-default">
+                                <input type="checkbox" wire:model="product.featured" id="featured" value="1">
+                                <label for="featured">Featured</label>
+                            </div>
+
+                            @error('product.featured')
+                            <label class="error text-color-danger" for="">{{ $message }}</label>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right"></label>
+                        <div class="col-sm-2">
+                            <div class="checkbox-custom checkbox-default">
+                                <input type="checkbox" wire:model="product.special" id="special" value="1">
+                                <label for="special">Special</label>
+                            </div>
+                            @error('product.special')
                             <label class="error text-color-danger" for="">{{ $message }}</label>
                             @enderror
                         </div>
@@ -69,48 +137,28 @@
 
                     <div class="form-group row">
                         <label class="col-sm-2 control-label text-lg-right pt-2">{{ __('Category') }}</label>
-                        <div class="col-sm-2">
-                            <select class="form-control mb-3 @error('product.category_id') error @enderror" wire:model="product.category_id">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->category_id }}">{{ $category->title }}</option>
+                        <div class="col-sm-4">
+                            @foreach($categories as $category)
+                                <div class="checkbox-custom checkbox-default">
+                                    <input type="checkbox" wire:model="selected_categories" id="checkbox{{ $category->id }}" value="{{ $category->id }}">
+                                    <label for="checkbox{{ $category->id }}">{{ $category->item->title }}</label>
+                                </div>
+
+                                @foreach($category->admin_childs as $child)
+                                    <div class="checkbox-custom checkbox-default">
+                                        <input type="checkbox" wire:model="selected_categories" id="checkbox{{ $child->id }}" value="{{ $child->id }}">
+                                        <label for="checkbox{{ $child->id }}">{{ $category->item->title }} - {{ $child->item->title }}</label>
+                                    </div>
                                 @endforeach
-                            </select>
+                            @endforeach
+
                             @error('product.category_id')
                             <label class="error text-color-danger" for="">{{ $message }}</label>
                             @enderror
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-2 control-label text-lg-right pt-2">{{ __('Sub category') }}</label>
-                        <div class="col-sm-2">
-                            <select class="form-control mb-3 @error('product.sub_category') error @enderror" wire:model="product.sub_category">
-                                <option value="">----------</option>
-                                @foreach($sub_categories as $category)
-                                    <option value="{{ $category->subcategory_id }}">{{ $category->title }}</option>
-                                @endforeach
-                            </select>
-                            @error('product.sub_category')
-                            <label class="error text-color-danger" for="">{{ $message }}</label>
-                            @enderror
-                        </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-2 control-label text-lg-right pt-2">{{ __('Watts') }}</label>
-                        <div class="col-sm-2">
-                            <select class="form-control mb-3 @error('product.watt') error @enderror" wire:model="product.watt">
-                                    <option value="">----------</option>
-                                    <option value="5kw">5kw</option>
-                                    <option value="7kw">7kw</option>
-                                    <option value="10kw">10kw</option>
-                                    <option value="15kw">15kw</option>
-                            </select>
-                            @error('product.watt')
-                            <label class="error text-color-danger" for="">{{ $message }}</label>
-                            @enderror
-                        </div>
-                    </div>
 
                     <div class="form-group row pb-3 offset-2">
 
@@ -144,37 +192,7 @@
 
                     </div>
 
-                    <div class="form-group row pb-3 offset-2">
 
-                        <div class="tabs p-0 col-md-12">
-                            <ul class="nav nav-tabs">
-                                @foreach($product->items as $index => $item)
-                                    <li class="nav-item @if($tab_active_second == $index) active @endif">
-                                        <a class="nav-link" wire:click.prevent="$set('tab_active_second', {{ $index }})" href="#desc_info{{ $index }}" data-toggle="tab"><img class="icon-16" src="{{ asset($item->language->icon) }}" alt=""></a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <div class="tab-content">
-                                @foreach($product->items as $index => $item)
-                                    <div id="desc_info{{ $index }}" class="tab-pane @if($tab_active_second == $index) active @endif">
-                                        <div wire:ignore>
-                                            <textarea class="summernote_info{{ $index }}" wire:model="product.items.{{ $index }}.content" >{!! $item->content !!}</textarea>
-                                        </div>
-                                    </div>
-
-                                @endforeach
-
-                                @foreach($product->items as $index => $item)
-                                    @error('product.items.'.$index.'.content')
-                                    <label class="error text-color-danger" for=""><img class="icon-16" src="{{ asset($item->language->icon) }}" alt=""> {{ $message }}</label>
-                                    <br>
-                                    @enderror
-                                @endforeach
-
-                            </div>
-                        </div>
-
-                    </div>
 
                     <div class="form-group mg-files row" data-sort-destination data-sort-id="media-gallery">
                         <label class="col-lg-2 control-label text-lg-right pt-2">{{ __('Image') }} ({{ config('admin.products.image_upload_width') }}px - {{ config('admin.products.image_upload_height') }}px)</label>

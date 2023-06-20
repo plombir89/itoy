@@ -16,18 +16,19 @@ class ContactsForm extends Mailable
     public $name;
     public $email;
     public $phone;
-    public $mess;
+    public $message;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, $email, $phone)
+    public function __construct($name, $email, $phone, $message)
     {
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
+        $this->message = $message;
     }
 
     /**
@@ -37,7 +38,7 @@ class ContactsForm extends Mailable
      */
     public function build()
     {
-        //dd('send');
+        dd('send');
         return $this
             ->from('admin@greenwatt.com')
             ->to('info@greenwatt.com')

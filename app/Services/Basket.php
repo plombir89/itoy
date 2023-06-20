@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class Basket
@@ -46,7 +47,8 @@ class Basket
                 $pivotRow->count++;
                 $pivotRow->update();
             }else{
-                return redirect()->route('basket')->with('warning', 'Product '.$product->title.', Only '.$product->stock.' items is available');
+                throw new \Exception('out_of_stock');
+                //return redirect()->route('basket')->with('warning', 'Product '.$product->title.', Only '.$product->stock.' items is available');
             }
 
         }else{
@@ -79,7 +81,8 @@ class Basket
 
     public function confirmOrder($data)
     {
-        $data['status'] = 1;
+        $data['status'] = Order::ORDER_PENDING;
+        $data['date_added'] = Carbon::now()->toDateTimeString();
 
         $this->order->update($data);
 

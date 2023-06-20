@@ -46,6 +46,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(!session('lang')){
+            session(['lang' => Language::defaultLang()->id]);
+            session(['lang_prefix' => Language::defaultLang()->prefix]);
+
+            $this->app->setLocale(session('lang_prefix'));
+        }
+
         view()->composer('admin.*', function () {
             View::share('adminlanguages', Language::getAdminLangs());
         });
@@ -58,13 +65,23 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+        view()->composer('front.blocks.categories', function (){
+
+            View::share('categories', ProductCategory::whereNull('parent_id')->whereHas('products',function($query){
+                $query->where('published', 1);
+            })->withCount('products')->with(['item' => function($query){
+                $query->select(['title', 'category_id'])->where(['lang' => session('lang')]);
+            }])->with('childs')->get()
+            );
+        });
+
         view()->composer('front.layouts.main', function ()
         {
-            View::share('categories',  ProductCategory::whereNull('parent_id')->whereHas('products',function($query){
-                    $query->where('published', 1);
-                })->withCount('products')->with(['item' => function($query){
-                    $query->select(['title', 'category_id'])->where(['lang' => session('lang')]);
-                }])->with('childs')->get()
+            View::share('categories', ProductCategory::whereNull('parent_id')->whereHas('products',function($query){
+                $query->where('published', 1);
+            })->withCount('products')->with(['item' => function($query){
+                $query->select(['title', 'category_id'])->where(['lang' => session('lang')]);
+            }])->with('childs')->get()
             );
 
             View::share('order', (new Basket())->getOrder());

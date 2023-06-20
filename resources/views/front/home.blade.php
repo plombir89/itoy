@@ -22,13 +22,13 @@
                         <div class="row">
                             <div id="top_home" class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                 <section id="ishiproductblock-501401729" class="ishiproductsblock">
-                                    <h3 class="home-title">Trending Products</h3>
+                                    <h3 class="home-title">{{ __('Trending Products') }}</h3>
                                     <ul class="ishiproductstab nav nav-tabs clearfix">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="#featured-products-block717870357" data-toggle="tab">featured</a>
+                                            <a class="nav-link" href="#featured-products-block717870357" data-toggle="tab">{{ __('Featured') }}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#new-products-block717870357" data-toggle="tab">Special</a>
+                                            <a class="nav-link" href="#new-products-block717870357" data-toggle="tab">{{ __('Special') }}</a>
                                         </li>
                                     </ul>
 
@@ -47,25 +47,11 @@
                                                                     </a>
                                                                     <div class="rating">
 
-                                                                              <span class="fa fa-stack">
-                                                                                <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                              </span>
-
-                                                                                                                        <span class="fa fa-stack">
-                                                                                <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                              </span>
-
-                                                                                                                        <span class="fa fa-stack">
-                                                                                <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                              </span>
-
-                                                                                                                        <span class="fa fa-stack">
-                                                                                <i class="fa fa-star gray fa-stack-2x"></i>
-                                                                              </span>
-
-                                                                                                                        <span class="fa fa-stack">
-                                                                                <i class="fa fa-star gray fa-stack-2x"></i>
-                                                                              </span>
+                                                                        @for($i = 1;$i <= 5; $i++)
+                                                                            <span class="fa fa-stack">
+                                                                                <i class="fa fa-star @if($i <= $product->rating) yellow @else gray @endif fa-stack-2x"></i>
+                                                                            </span>
+                                                                        @endfor
                                                                     </div>
 
 
@@ -74,9 +60,7 @@
                                                                     <h4>
                                                                         <a href="{{ route('product.show', [app()->getLocale(), $product->item['slug']]) }}">{{ $product->item->title }}</a></h4>
                                                                     <p class="description">
-                                                                        The 30-inch Apple Cinema HD Display delivers an
-                                                                        amazing 2560 x 1600 pixel resolution. Designed
-                                                                        sp..</p>
+                                                                        {{ Str::limit(strip_tags($product->item->text), 150) }}</p>
 
                                                                     <p class="price">
                                                                         @if($product['discount'] > 0)
@@ -90,7 +74,7 @@
 
                                                                         <div class="btn-wishlist">
                                                                             <button type="button" data-toggle="tooltip"
-                                                                                    title="Add to Wish List"
+                                                                                    title="{{ __('Add to Wish List') }}"
                                                                                     onclick="wishlist.add({{ $product->id }});"><i
                                                                                     class="fa fa-heart"></i>
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +94,7 @@
 
                                                                         <div class="btn-cart">
                                                                             <button type="button" data-toggle="tooltip"
-                                                                                    title="Add to Cart"
+                                                                                    title="{{ __('Add to Cart') }}"
                                                                                     onclick="cart.add({{ $product->id }});">
                                                                                 <div class="button-cart">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +119,7 @@
                                                                                              y="25%"></use>
                                                                                     </svg>
                                                                                 </div>
-                                                                                <span class="lblcart">Add to Cart</span>
+                                                                                <span class="lblcart">{{ __('Add to Cart') }}</span>
                                                                             </button>
                                                                         </div>
                                                                     </div>
@@ -171,25 +155,11 @@
                                                                     </a>
                                                                     <div class="rating">
 
-                                                                      <span class="fa fa-stack">
-                                                                        <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                      </span>
-
-                                                                                                                <span class="fa fa-stack">
-                                                                        <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                      </span>
-
-                                                                                                                <span class="fa fa-stack">
-                                                                        <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                      </span>
-
-                                                                                                                <span class="fa fa-stack">
-                                                                        <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                      </span>
-
-                                                                                                                <span class="fa fa-stack">
-                                                                        <i class="fa fa-star yellow fa-stack-2x"></i>
-                                                                      </span>
+                                                                        @for($i = 1;$i <= 5; $i++)
+                                                                            <span class="fa fa-stack">
+                                                                                <i class="fa fa-star @if($i <= $product->rating) yellow @else gray @endif fa-stack-2x"></i>
+                                                                            </span>
+                                                                        @endfor
                                                                     </div>
 
 
@@ -197,9 +167,7 @@
                                                                 <div class="caption">
                                                                     <h4>
                                                                         <a href="{{ route('product.show', [app()->getLocale(), $product->item['slug']]) }}">{{ $product->item->title }}</a></h4>
-                                                                    <p class="description">Samsung Galaxy Tab 10.1, is the
-                                                                        world&rsquo;s thinnest tablet, measuring 8.6 mm
-                                                                        thickness, running w..</p>
+                                                                    <p class="description">{{ Str::limit(strip_tags($product->item->text), 150) }}</p>
                                                                     <p class="price">
                                                                         @if($product['discount'] > 0)
                                                                             <span class="price-new">{{ $product['price'] }} MDL</span> <span class="price-old">{{ $product['discount'] }} MDL</span>
@@ -211,7 +179,7 @@
 
                                                                         <div class="btn-wishlist">
                                                                             <button type="button" data-toggle="tooltip"
-                                                                                    title="Add to Wish List"
+                                                                                    title="{{ __('Add to Wish List') }}"
                                                                                     onclick="wishlist.add({{ $product->id }});"><i
                                                                                     class="fa fa-heart"></i>
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -231,7 +199,7 @@
 
                                                                         <div class="btn-cart">
                                                                             <button type="button" data-toggle="tooltip"
-                                                                                    title="Add to Cart"
+                                                                                    title="{{ __('Add to Cart') }}"
                                                                                     onclick="cart.add({{ $product->id }});"
                                                                                     class="sold-out" disabled>
                                                                                 <div class="button-cart">
@@ -257,7 +225,7 @@
                                                                                              y="25%"></use>
                                                                                     </svg>
                                                                                 </div>
-                                                                                <span class="lblcart">Add to Cart</span>
+                                                                                <span class="lblcart">{{ __('Add to Cart') }}</span>
                                                                             </button>
                                                                         </div>
                                                                     </div>
@@ -387,7 +355,7 @@
                                     </div>
                                 </section>
                                 <section class="smartblog_block clearfix">
-                                    <h3 class="home-title">Latest Blog</h3>
+                                    <h3 class="home-title">{{ __('Latest Blog') }}</h3>
                                     <div id="smartblog-carousel" class="owl-carousel">
 
                                         @foreach($latestBlogs as $blog)
@@ -416,8 +384,7 @@
                                                 </div>
                                                 <div class="view-blog">
                                                     <div class="read-more"><a
-                                                            href="{{ route('blog.show', [app()->getLocale(), $blog->item->slug]) }}">Read
-                                                            more</a></div>
+                                                            href="{{ route('blog.show', [app()->getLocale(), $blog->item->slug]) }}">{{ __('Read more') }}</a></div>
                                                     <i class="fa fa-long-arrow-right"></i>
                                                 </div>
                                             </div>

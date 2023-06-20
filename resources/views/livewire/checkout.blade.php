@@ -1,8 +1,8 @@
 <div>
     @if (session()->has('confirmed'))
-        <div class="alert alert-success">
-            {{ session('confirmed') }}
-        </div>
+            <h1>{{ __('Your order has been placed!') }}</h1>
+            <p>You can view your order history by going to the <a href="{{ route('account.index') }}">my account</a> page and by clicking on <a href="{{ route('orders.index') }}">history</a>.</p>
+            <p>{{ __('Thanks for shopping with us online!') }}</p>
     @else
     <div class="panel-body row">
         <div class="col-sm-6">

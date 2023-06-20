@@ -3,40 +3,14 @@
 @section('title', $data->title)
 
 @section('content')
+
     <div id="product-product" class="container">
         <div class="wrapper_container row">
             <aside id="column-left" class="col-sm-3 hidden-xs">
-                <div class="box">
-                    <h2 class="page-title hidden-sm hidden-xs">
-                        Categories
-                    </h2>
-                    <div class="block-title clearfix  hidden-lg hidden-md collapsed" data-target="#box-container"
-                         data-toggle="collapse">
-                        <span class="page-title">Categories</span>
-                        <span class="navbar-toggler collapse-icons">
-          <i class="fa fa-angle-down add"></i>
-          <i class="fa fa-angle-up remove"></i>
-        </span>
-                    </div>
-                    <div id="box-container" class="collapse data-toggler">
-                        <ul class="category-top-menu">
-                            @include('front.blocks.categories')
-                        </ul>
-                    </div>
-                </div>
+                @include('front.blocks.categories')
 
-                <section id="ishibannerblock-1815552175" class="ishibannerblock one_bannerblock">
-                    <div class="bannerblock col-md-12 col-sm-12 col-xs-12">
-                        <div class="image-container">
-                            <a href="#" class="ishi-customhover-fadeinflip ">
-                                <img
-                                    src="image/cache/catalog/Left-banner-345x417.jpg"
-                                    alt="" class="img-responsive">
+                @include('front.blocks.banner')
 
-                            </a>
-                        </div>
-                    </div>
-                </section>
                 @include('front.blocks.new-products')
             </aside>
 
@@ -55,10 +29,12 @@
                                 <h2 class="product-title">{{ $data->title }}</h2>
                                 <ul class="list-unstyled price">
                                     <li>
-                                        <h2 class="product-price">{{ $data->parent->price }}d</h2>
-
+                                        @if($data->parent->discount > 0)
+                                            <h2 class="product-price">{{ $data->parent->price }} MDL <del>{{ $data->parent->discount }} MDL</del></h2>
+                                        @else
+                                            <h2 class="product-price">{{ $data->parent->price }} MDL</h2>
+                                        @endif
                                     </li>
-                                    <li class="product-dis hidden-xs"><span style="text-decoration: line-through;">$122.00</span></li>
                                 </ul>
                             </div>
                             <div class="product-image thumbnails_horizontal">
@@ -89,7 +65,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading" role="tab" id="headingOne">
                                             <a data-toggle="collapse" href="#tab-description" data-parent="#accordion"
-                                               aria-expanded="true"> Description </a>
+                                               aria-expanded="true"> {{ __('Description') }} </a>
                                         </div>
                                         <div id="tab-description" class="panel-collapse collapse in" role="tabpanel"
                                              aria-labelledby="headingOne">
@@ -101,39 +77,60 @@
                                     <div class="panel panel-default tab_review">
                                         <div class="panel-heading" role="tab" id="headingTwo">
                                             <a data-toggle="collapse" href="#tab-review" data-parent="#accordion"
-                                               aria-expanded="false">Reviews (1)</a>
+                                               aria-expanded="false">{{ __('Reviews') }} ({{ $data->parent->reviews }})</a>
                                         </div>
                                         <div id="tab-review" class="panel-collapse collapse" role="tabpanel"
                                              aria-labelledby="headingTwo">
                                             <div class="panel-body">
                                                 <form class="form-horizontal" id="form-review">
-                                                    <div id="review"></div>
-                                                    <h2>Write a review</h2>
+                                                    <div id="review">
+                                                        @foreach($reviews as $review)
+                                                        <table class="table table-striped table-bordered">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td style="width: 50%;"><strong>{{ $review->user->name }}</strong></td>
+                                                                <td class="text-end">{{ $review->created_at->format('d.m.Y H:i') }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2"><p>{{ $review->text }}</p>
+                                                                    <div class="rating">
+                                                                        @for($i = 1;$i <= 5; $i++)
+                                                                            <span class="fa fa-stack">
+                                                                                <i class="fa fa-star @if($i <= $review->rating) yellow @else gray @endif fa-stack-2x"></i>
+                                                                            </span>
+                                                                        @endfor
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        @endforeach
+                                                        <div class="text-end"></div>
+                                                    </div>
+                                                    <h2>{{ __('Write a review') }}</h2>
                                                     <div class="form-group required">
                                                         <div class="col-sm-12">
-                                                            <label class="control-label" for="input-name">Your
-                                                                Name</label>
-                                                            <input type="text" name="name" value="" id="input-name"
-                                                                   class="form-control"/>
+                                                            <label class="control-label" for="input-name">{{ __('YourName') }}</label>
+                                                            <input type="text" name="name" value="{{ auth()->check() ? auth()->user()->name : '' }}" id="input-name"class="form-control"/>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group required">
+                                                    <input type="hidden" name="product_id" value="{{ $data->parent->id }}">
+                                                    <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            <label class="control-label" for="input-review">Your
-                                                                Review</label>
-                                                            <textarea name="text" rows="5" id="input-review"
+                                                            <label class="control-label" for="input-text">{{ __('Your Review') }}</label>
+                                                            <textarea name="text" rows="5" id="input-text"
                                                                       class="form-control"></textarea>
                                                             <div class="help-block"><span
-                                                                    class="text-danger">Note:</span> HTML is not
-                                                                translated!
+                                                                    class="text-danger">{{ __('Note') }}:</span> {{ __('HTML is not translated!') }}
                                                             </div>
+                                                            <p id="error-text" class="invalid-feedback"></p>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group required">
+                                                    <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            <label class="control-label radio-title">Rating</label>&nbsp;&nbsp;&nbsp;
+                                                            <label class="control-label radio-title">{{ __('Rating') }}</label>&nbsp;&nbsp;&nbsp;
                                                             <div class="form-radio">
-                                                                <span>Bad</span>&nbsp;
+                                                                <span>{{ __('Bad') }}</span>&nbsp;
                                                                 <input type="radio" name="rating" value="1"/>
                                                                 &nbsp;
                                                                 <input type="radio" name="rating" value="2"/>
@@ -143,16 +140,18 @@
                                                                 <input type="radio" name="rating" value="4"/>
                                                                 &nbsp;
                                                                 <input type="radio" name="rating" value="5"/>
-                                                                &nbsp;<span>Good</span>
+                                                                &nbsp;<span>{{ __('Good') }}</span>
                                                             </div>
+                                                            <div id="error-rating" class="invalid-feedback"></div>
                                                         </div>
-                                                    </div>
 
+                                                    </div>
+                                                    <div id="alert"></div>
                                                     <div class="buttons clearfix">
                                                         <div class="pull-right">
-                                                            <button type="button" id="button-review"
-                                                                    data-loading-text="Loading..."
-                                                                    class="btn btn-primary">Continue
+                                                            <button type="submit" id="button-review"
+                                                                    data-loading-text="{{ __('Loading...') }}"
+                                                                    class="btn btn-primary">{{ __('Continue') }}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -171,29 +170,15 @@
                             </div>
 
                             <div class="rating-wrapper">
+                                @for($i = 1;$i <= 5; $i++)
+                                    <span class="fa fa-stack">
+                                      <i class="fa fa-star @if($i <= $data->parent->rating) yellow @else gray @endif fa-stack-2x"></i>
+                                    </span>
+                                @endfor
 
-                    <span class="fa fa-stack">
-                      <i class="fa fa-star yellow fa-stack-2x"></i>
-                    </span>
-
-                                <span class="fa fa-stack">
-                      <i class="fa fa-star yellow fa-stack-2x"></i>
-                    </span>
-
-                                <span class="fa fa-stack">
-                      <i class="fa fa-star yellow fa-stack-2x"></i>
-                    </span>
-
-                                <span class="fa fa-stack">
-                      <i class="fa fa-star gray fa-stack-2x"></i>
-                    </span>
-
-                                <span class="fa fa-stack">
-                      <i class="fa fa-star gray fa-stack-2x"></i>
-                    </span>
-                                <a class="review-count" href="" onclick="customclick(); return false;">1 reviews</a> /
+                                <a class="review-count" href="" onclick="customclick(); return false;">{{ $data->parent->reviews }} {{ __('reviews') }}</a> /
                                 <a class="write-review" href="" onclick="customclick(); return false;"><i
-                                        class="fa fa-pencil"></i> Write a review</a>
+                                        class="fa fa-pencil"></i> {{ __('Write a review') }}</a>
                             </div>
 
                             <ul class="list-unstyled price">
@@ -214,14 +199,14 @@
                             <hr>
 
                             <div class="form-group">
-                                <label class="control-label" for="input-quantity">Qty</label>
+                                <label class="control-label" for="input-quantity">{{ __('Qty') }}</label>
                                 <input type="text" name="quantity" value="1" size="2" id="input-quantity"
                                        class="form-control"/>
-                                <button type="button" id="button-cart" data-loading-text="Loading..."
-                                        class="btn btn-primary btn-lg btn-block">Add to Cart
+                                <button type="button" id="button-cart" data-loading-text="{{ __('Loading...') }}"
+                                        class="btn btn-primary btn-lg btn-block">{{ __('Add to Cart') }}
                                 </button>
                                 <button type="button" data-toggle="tooltip" class="btn btn-default wishlist"
-                                        title="Add to Wish List" onclick="wishlist.add({{ $data->parent->id }});">
+                                        title="{{ __('Add to Wish List') }}" onclick="wishlist.add({{ $data->parent->id }});">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                                         <symbol id="heart-shape-outline" viewBox="0 0 1030 1030"><title>
                                                 heart-shape-outline</title>
@@ -238,8 +223,8 @@
                             </div>
 
                             <ul class="list-unstyled attr">
-                                <li><span>Product Code:</span> {{ $data->parent->code }}</li>
-                                <li><span>Availability:</span> In Stock</li>
+                                <li><span>{{ __('Product Code') }}:</span> {{ $data->parent->code }}</li>
+                                <li><span>{{ __('Availability') }}:</span> @if($data->parent->stock == 0) {{ __('Out of Stock') }} @else {{ __('In Stock') }} @endif </li>
                             </ul>
                         </div>
                     </div>
@@ -250,24 +235,67 @@
         </div>
     </div>
     <script type="text/javascript"><!--
-        $('select[name=\'recurring_id\'], input[name="quantity"]').change(function () {
+
+        $('#form-review').on('submit', function(e) {
+            e.preventDefault();
+
+            var element = this;
+
             $.ajax({
-                url: 'index.php?route=product/product/getRecurringDescription',
-                type: 'post',
-                data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
-                dataType: 'json',
-                beforeSend: function () {
-                    $('#recurring-description').html('');
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function (json) {
-                    $('.alert-dismissible, .text-danger').remove();
+                url: '{{ route('product.review.store') }}',
+                type: 'post',
+                data: $('#form-review').serialize(),
+                dataType: 'json',
+                cache: false,
+                contentType: 'application/x-www-form-urlencoded',
+                processData: false,
+                beforeSend: function() {
+                    $('#button-review').button('loading');
+                },
+                complete: function() {
+                    $('#button-review').button('reset');
+                },
+                success: function(json) {
+                    $('.alert-dismissible').remove();
+                    $('#form-review').find('.is-invalid').removeClass('is-invalid');
+                    $('#form-review').find('.invalid-feedback').removeClass('d-block');
 
                     if (json['success']) {
-                        $('#recurring-description').html(json['success']);
+                        $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-circle-exclamation"></i> ' + json['success'] + '</div>');
+
+                        $('#input-text').val('');
+                        $('input[type=\'radio\']').prop('checked', false);
                     }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+
+                    $('.alert-dismissible').remove();
+                    $('#form-review').find('.is-invalid').removeClass('is-invalid');
+                    $('#form-review').find('.invalid-feedback').removeClass('d-block');
+
+                    if (xhr.responseJSON['warning']) {
+
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + xhr.responseJSON['warning'] + '</div>');
+
+                    }
+
+                    if (xhr.responseJSON['errors']) {
+
+
+                        for (key in xhr.responseJSON['errors']) {
+                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                            $('#error-' + key.replaceAll('_', '-')).html(xhr.responseJSON['errors'][key]).addClass('d-block');
+                        }
+                    }
+
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
         });
+
         //--></script>
     <script type="text/javascript"><!--
         $('#button-cart').on('click', function () {
@@ -333,6 +361,27 @@
 
 
                         $('#cart > ul').load('/cart/info ul li');
+                    }
+
+                    if (json['warning']) {
+
+
+                        $.notify({message: json.warning}, {
+                            type: "warning",
+                            offset: 0,
+                            placement: {from: "top", align: "center"},
+                            animate: {enter: "animated fadeInDown", exit: "animated fadeOutUp"},
+                            template: '<div data-notify="container" class="col-xs-12 alert alert-{0}" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<span data-notify="icon"></span> ' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span data-notify="message">{2}</span>' +
+                                '<div class="progress" data-notify="progressbar">' +
+                                '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                                '</div>' +
+                                '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                                '</div>'
+                        });
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

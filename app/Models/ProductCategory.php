@@ -18,6 +18,15 @@ class ProductCategory extends Model
         return $this->hasMany(ProductCategoryData::class, 'category_id', 'id')->whereNull('parent_id');
     }
 
+    public function admin_items()
+    {
+        return $this->hasMany(ProductCategoryData::class, 'category_id', 'id');
+    }
+
+    public function admin_childs() {
+        return $this->hasMany(ProductCategory::class,'parent_id','id');
+    }
+
     public function childs() {
         return $this->hasMany(ProductCategory::class,'parent_id','id')->whereHas('products',function($query){
             $query->where('published', 1);

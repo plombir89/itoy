@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -33,43 +34,24 @@ class LoginController extends Controller
      *
      * @return void
      */
-    protected $username;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-
-        $this->username = $this->findUsername();
     }
 
-    /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function findUsername()
+
+    public function showLoginForm()
     {
-        $login = request()->input('username');
+        $changeLang = [];
 
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        foreach (Language::siteLangs() as $index => $langs){
+            $changeLang[$index]['id'] = $langs->id;
+            $changeLang[$index]['link'] = route('login');
+            $changeLang[$index]['name'] = $langs->prefix;
+            $changeLang[$index]['icon'] = $langs->icon;
+            $changeLang[$index]['title'] = $langs->title;
+        }
 
-        request()->merge([$fieldType => $login]);
-
-        return $fieldType;
-    }
-
-    /**
-     * Get username property.
-     *
-     * @return string
-     */
-    public function username()
-    {
-        return $this->username;
+        return view('auth.login', compact('changeLang'));
     }
 }

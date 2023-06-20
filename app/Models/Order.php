@@ -9,7 +9,11 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'phone', 'email', 'city', 'address', 'postal_code', 'status'];
+    const ORDER_PENDING = 1;
+    const ORDER_CANCELED = 2;
+    const ORDER_COMPLETED = 3;
+
+    protected $fillable = ['name', 'phone', 'email', 'city', 'address', 'postal_code', 'status', 'date_added'];
 
     public function products()
     {

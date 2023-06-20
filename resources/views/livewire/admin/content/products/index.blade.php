@@ -10,7 +10,6 @@
                     <th>ID</th>
                     <th>{{ __('Title') }}</th>
                     <th>{{ __('Status') }}</th>
-                    <th>{{ __('Category') }}</th>
                     <th>{{ __('Created') }}</th>
                     <th>{{ __('Actions') }}</th>
                     </thead>

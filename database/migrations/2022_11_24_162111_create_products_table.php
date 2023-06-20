@@ -21,8 +21,10 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('discount');
             $table->string('img');
-            $table->tinyInteger('featured')->default(0);
-            $table->tinyInteger('special')->default(0);
+            $table->boolean('featured')->default(false);
+            $table->boolean('special')->default(false);
+            $table->integer('reviews')->default(0);
+            $table->integer('rating')->default(0);
             $table->timestamps();
         });
     }

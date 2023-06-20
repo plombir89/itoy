@@ -4,7 +4,7 @@
             <section class="card">
                 <div class="card-body">
 
-                    @foreach($category->items as $index => $item)
+                    @foreach($category->admin_items as $index => $item)
                         <div class="form-group row">
                             <label class="col-sm-2 control-label text-sm-right pt-2">{{ __('Title') }} <span class="required">*</span></label>
                             <div class="col-sm-10">
@@ -14,33 +14,29 @@
                                         <img class="icon-16" src="{{ asset($item->language->icon) }}" alt="">
                                     </span>
                                 </span>
-                                    <input type="text" wire:model.lazy="category.items.{{ $index }}.title" class="form-control @error('category.items.'. $index .'.title') error @enderror"/>
+                                    <input type="text" wire:model.lazy="category.admin_items.{{ $index }}.title" class="form-control @error('category.admin_items.'. $index .'.title') error @enderror"/>
                                 </div>
-                                @error('category.items.'. $index .'.title')
+                                @error('category.admin_items.'. $index .'.title')
                                 <label class="error text-color-danger" for="">{{ $message }}</label>
                                 @enderror
                             </div>
 
                         </div>
                     @endforeach
-
                         <div class="form-group row">
-                            <label class="col-sm-2 control-label text-sm-right pt-2">{{ __('Image') }} <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label text-sm-right">{{ __('Parent') }}</label>
                             <div class="col-sm-10">
+                                <select wire:model="category.parent_id" class="form-control">
+                                    <option value="">No parent</option>
 
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->item->title }}</option>
+                                    @endforeach
 
-                                <textarea wire:model="category.img" class="form-control @error('category.img') error @enderror"></textarea>
-                                @error('category.img')
-                                <label class="error text-color-danger" for="">{{ $message }}</label>
-                                @enderror
-
-                                <p class="mt-4">{!! $category->img !!}</p>
-
+                                </select>
                             </div>
 
-
                         </div>
-
                 </div>
                 <footer class="card-footer">
                     <div class="row justify-content-end">

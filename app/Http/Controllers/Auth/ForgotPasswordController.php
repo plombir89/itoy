@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -19,4 +20,19 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    public function showLinkRequestForm()
+    {
+        $changeLang = [];
+
+        foreach (Language::siteLangs() as $index => $langs){
+            $changeLang[$index]['id'] = $langs->id;
+            $changeLang[$index]['link'] = route('login');
+            $changeLang[$index]['name'] = $langs->prefix;
+            $changeLang[$index]['icon'] = $langs->icon;
+            $changeLang[$index]['title'] = $langs->title;
+        }
+
+        return view('auth.passwords.email', compact('changeLang'));
+    }
 }

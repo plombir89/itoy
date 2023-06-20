@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
-use App\Models\NewsData;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductData;
-use App\Models\ProductSubCategoryData;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\ProductRating;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -87,6 +85,8 @@ class ProductsController extends Controller
             $query->select(['title', 'category_id'])->where(['lang' => session('lang')]);
         }])->with('childs')->get();
 
+        $reviews = ProductRating::where(['product_id' => $data->parent->id,'status' => 1])->with('user')->get();
+
         $changeLang = [];
 
         foreach (Language::siteLangs() as $index => $langs){
@@ -100,6 +100,36 @@ class ProductsController extends Controller
             $changeLang[$index]['title'] = $langs->title;
         }
 
-        return view('front.product', compact('changeLang', 'lang', 'data', 'categories'));
+        return view('front.product', compact('changeLang', 'lang', 'data', 'categories', 'reviews'));
+    }
+
+    public function rating_store(Request $request)
+    {
+        if(!Auth::check()){
+            return response()->json([
+                'warning' => 'You must be loggedin'
+            ], 401);
+        }
+
+        $data = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'text' => 'required|string|min:25|max:300',
+            'rating' => 'required|in:1,2,3,4,5'
+        ],[
+            'rating' => 'Select rating'
+        ]);
+
+        ProductRating::create([
+            'user_id' => \auth()->id(),
+            'product_id' => $data['product_id'],
+            'text' => $data['text'],
+            'rating' => $data['rating']
+        ]);
+
+        $resp = [
+            'success' => 'Thank you for your review. It has been submitted to the webmaster for approval.'
+        ];
+
+        return response()->json($resp, 201);
     }
 }

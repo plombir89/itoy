@@ -25,7 +25,20 @@
 
                         </div>
                     @endforeach
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right">{{ __('Parent') }}</label>
+                            <div class="col-sm-10">
+                                <select wire:model="parent" class="form-control">
+                                    <option value="">No parent</option>
 
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->item->title }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+
+                        </div>
                 </div>
                 <footer class="card-footer">
                     <div class="row justify-content-end">

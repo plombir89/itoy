@@ -1,10 +1,10 @@
 <section class="featured-products">
     <h3 class="page-title hidden-sm hidden-xs">
-        New Products
+        {{ __('New Products') }}
     </h3>
     <div class="block-title clearfix  hidden-lg hidden-md collapsed" data-target="#latest-container"
          data-toggle="collapse">
-        <span class="h3">New Products</span>
+        <span class="h3">{{ __('New Products') }}</span>
         <span class="navbar-toggler collapse-icons">
           <i class="fa fa-angle-down add"></i>
           <i class="fa fa-angle-up remove"></i>
@@ -24,8 +24,7 @@
             <div class="caption">
                 <h4>
                     <a href="{{ route('product.show', [app()->getLocale(), $product->item->slug]) }}">{{ $product->item->title }}</a></h4>
-                <p class="description">Samsung Galaxy Tab 10.1, is the world’s thinnest tablet,
-                    measuring 8.6 mm thickness, running w..</p>
+                <p class="description">{{ Str::limit(strip_tags($product->item->text), 100) }}</p>
                 <p class="price">
                     @if($product->discount > 0)
                         <span class="price-new">{{ $product->price }} MDL</span> <span class="price-old">{{ $product->discount }} MDL</span>

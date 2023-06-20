@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+Route::group(['middleware' => ['auth','isAdmin'], 'prefix' => 'admin', 'as' => 'admin.'], function(){
 
     Route::get('user', [\App\Http\Controllers\Admin\User\UserController::class, 'index'])->name('user');
 

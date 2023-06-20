@@ -16,7 +16,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes(['register' => false]);
+Auth::routes();
+
+Route::group(['middleware' => 'auth', 'prefix' => 'account'], function(){
+    Route::get('/', [App\Http\Controllers\Account\IndexController::class, 'index'])->name('account.index');
+    Route::get('edit', [App\Http\Controllers\Account\EditController::class, 'index'])->name('account.edit');
+    Route::patch('update', [App\Http\Controllers\Account\EditController::class, 'update'])->name('account.update');
+
+    Route::get('password', [App\Http\Controllers\Account\PasswordController::class, 'index'])->name('account.password');
+    Route::patch('password', [App\Http\Controllers\Account\PasswordController::class, 'update'])->name('account.password.update');
+
+    Route::get('address', [App\Http\Controllers\Account\AddressController::class, 'index'])->name('account.address');
+    Route::get('address/add', [App\Http\Controllers\Account\AddressController::class, 'add'])->name('account.address.add');
+    Route::post('address/store', [App\Http\Controllers\Account\AddressController::class, 'store'])->name('account.address.store');
+    Route::get('address/edit/{delivery}', [App\Http\Controllers\Account\AddressController::class, 'edit'])->name('account.address.edit');
+    Route::patch('address/update/{delivery}', [App\Http\Controllers\Account\AddressController::class, 'update'])->name('account.address.update');
+
+    Route::get('address/delete/{delivery}', [App\Http\Controllers\Account\AddressController::class, 'delete'])->name('account.address.delete');
+
+    Route::get('wishlist', [App\Http\Controllers\Account\WhishlistController::class, 'index'])->name('account.wishlist');
+    Route::get('wishlist/remove/{product}', [App\Http\Controllers\Account\WhishlistController::class, 'remove'])->name('account.wishlist.remove');
+
+    Route::get('orders', [App\Http\Controllers\Account\OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{order}', [App\Http\Controllers\Account\OrderController::class, 'show'])->name('orders.show');
+
+});
+
+Route::post('wishlist/add/{product}', [App\Http\Controllers\Account\WhishlistController::class, 'add'])->name('account.wishlist.add');
+
+Route::post('product/review', [App\Http\Controllers\ProductsController::class, 'rating_store'])->name('product.review.store');
+
 
 Route::match(['GET', 'POST'], '/add/{product}', [BasketController::class, 'add'])->name('basket.add');
 

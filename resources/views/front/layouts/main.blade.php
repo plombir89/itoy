@@ -60,7 +60,7 @@
       </svg>
       <svg class="icon" viewBox="0 0 30 30"><use xlink:href="#sale" x="0%" y="10%"></use></svg>
   	</span>
-                            <p>Welcome To Our Toy Store</p>
+                            <p>{{ __('Welcome To Our Toy Store') }}</p>
                         </div>
 
 
@@ -69,9 +69,9 @@
                         <div class="language-selector">
 
                                 <div class="btn-group dropdown">
-                                    <span class="language-selector-label">Language :</span>
+                                    <span class="language-selector-label">{{ __('Language') }} :</span>
                                     <a title="Language" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="expand-more">Language</span> <i class="fa fa-angle-down"></i>
+                                        <span class="expand-more">{{ __('Language') }}</span> <i class="fa fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
                                         @foreach($changeLang as $language)
@@ -89,8 +89,35 @@
                         </div>
 
                         <div class="user-info">
-                            <a href="/wishlist"
-                               id="wishlist-total" title="Wish List (0)"><span class="wishlist-text">Wish List (0)</span></a>
+                            <div class="dropdown">
+                                <a title="{{ __('Account') }}" class="dropdown-toggle" data-toggle="dropdown">
+                                    <div class="user-logo"></div>
+                                    <span class="expand-more">{{ __('Account') }}</span>
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @auth()
+
+                                        <li><a href="{{ route('account.index') }}">{{ __('Account') }}</a></li>
+                                        <li><a href="{{ route('orders.index') }}">{{ __('Order History') }}</a></li>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                        </form>
+                                        <li><a onclick="event.preventDefault();document.getElementById('logout-form').submit();" href="#">{{ __('Logout') }}</a></li>
+
+                                    @endauth
+                                    @guest()
+                                        <li>
+                                            <a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                                        <li>
+                                            <a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                                        <li>
+                                            <a href="{{ route('account.wishlist') }}"
+                                               id="wishlist-total" title="{{ __('Wish List') }} (0)"><span class="wishlist-text">{{ __('Wish List') }} (0)</span></a>
+                                        </li>
+                                    @endguest
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,7 +151,7 @@
                             <div id="logo">
                                 <a href="{{ route('home') }}"><img
                                         src="{{ asset('assets/images/Logo.png') }}"
-                                        title="Your Store" alt="Your Store" class="img-responsive"/></a>
+                                        title="" alt="" class="img-responsive"/></a>
                             </div>
                         </div>
                         <div class="mobile-width-right col-sm-4 col-xs-4">
@@ -152,12 +179,12 @@
                                 <form>
                                     <div id="search" class="input-group">
                                         <input id="ajax-search-text" type="text" name="search" value=""
-                                               placeholder="Search Our Catalog" class="form-control input-lg"/>
+                                               placeholder="{{ __('Search Our Catalog') }}" class="form-control input-lg"/>
                                         <div class="ajaxishi-search" style="display: none;">
                                             <ul></ul>
                                         </div>
                                         <span class="input-group-btn">
-                                            <button id="ajax-search-btn" type="button" class="btn btn-default btn-lg">Search</button>
+                                            <button id="ajax-search-btn" type="button" class="btn btn-default btn-lg">{{ __('Search') }}</button>
                                         </span>
                                     </div>
 
@@ -182,7 +209,7 @@
                             </div>
                             <div id="_desktop-contactinfo">
                                 <div class="contact-num">
-                                    <a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=information/contact">
+                                    <a href="#">
                                         <div class="call-img">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                                                 <symbol id="email-img" viewBox="0 0 650 650"><title>email-img</title>
@@ -198,7 +225,7 @@
                                             </svg>
                                         </div>
                                         <div class="call">
-                                            <div class="call-us">{{ _('Email Us') }}</div>
+                                            <div class="call-us">{{ __('Email Us') }}</div>
                                             <span class="call-num">{{ $email }}</span>
                                         </div>
                                     </a>
@@ -280,8 +307,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div id="view_text">View More</div>
-                    <div id="menu_text">Menu</div>
+                    <div id="view_text">{{ __('View More') }}</div>
+                    <div id="menu_text">{{ __('Menu') }}</div>
 
                 </div>
             </div>
@@ -357,10 +384,10 @@
             <div class="container">
                 <div class="row">
                     <div class="block-contact col-lg-3 col-md-3 col-sm-12">
-                        <h5 class="hidden-sm hidden-xs">Store Information</h5>
+                        <h5 class="hidden-sm hidden-xs">{{ __('Store Information') }}</h5>
                         <div class="footer-title clearfix  hidden-lg hidden-md collapsed"
                              data-target="#contact-info-container" data-toggle="collapse">
-                            <span class="h3">Store Information</span>
+                            <span class="h3">{{ __('Store Information') }}</span>
                             <span class="navbar-toggler collapse-icons">
                             <i class="fa fa-angle-down add"></i>
                             <i class="fa fa-angle-up remove"></i>
@@ -500,8 +527,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12"><p class="footer-aftertext">Powered By <a
-                                href="http://www.opencart.com">OpenCart</a> Your Store &copy; 2023</p></div>
+                    <div class="col-lg-12 col-md-12 col-xs-12"><p class="footer-aftertext">Powered By <a href="http://www.opencart.com">OpenCart</a> Your Store &copy; 2023</p></div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
+use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -50,8 +52,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'agree' => ['required', 'boolean'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -67,7 +71,24 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'role_id' => Role::USER,
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        $changeLang = [];
+
+        foreach (Language::siteLangs() as $index => $langs){
+            $changeLang[$index]['id'] = $langs->id;
+            $changeLang[$index]['link'] = route('register');
+            $changeLang[$index]['name'] = $langs->prefix;
+            $changeLang[$index]['icon'] = $langs->icon;
+            $changeLang[$index]['title'] = $langs->title;
+        }
+
+        return view('auth.register', compact('changeLang'));
     }
 }

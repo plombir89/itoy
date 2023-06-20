@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Content\Products;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use App\Models\ProductCategory;
+use App\Models\ProductCategoryData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,7 @@ class CategoryController extends Controller
 
     public function edit($category)
     {
-        $category = ProductCategory::where('id', $category)->with('items.language')->firstOrFail();
+        $category = ProductCategory::where('id', $category)->with('admin_items.language')->firstOrFail();
 
         return view('admin.content.products.category.edit', compact('category'));
     }
@@ -45,7 +46,7 @@ class CategoryController extends Controller
         // Columns by which we make 'order by'
         $columns = [
             1 => 'title',
-            2 => 'created_at'
+            3 => 'created_at'
         ];
 
         $limit = $request->input('length');
@@ -78,7 +79,7 @@ class CategoryController extends Controller
         $news = $query
             ->join('product_category_data', 'product_category_data.category_id', '=', 'product_categories.id')
             ->join('languages', 'languages.id', '=', 'product_category_data.lang')
-            ->select([DB::raw("SQL_CALC_FOUND_ROWS product_categories.id,product_categories.created_at,product_category_data.title")])
+            ->select([DB::raw("SQL_CALC_FOUND_ROWS product_categories.id,product_categories.parent_id,product_categories.created_at,product_category_data.title")])
             ->where("product_category_data.lang", $lang)
             ->orderBy($order, $dir)->take($limit)->offset($start)->get();
 
@@ -90,9 +91,12 @@ class CategoryController extends Controller
             $actions = "<a href=". route('admin.content.products.category.edit', $item->id). "><i class='bx bx-pencil' style='font-size: 16px; padding-right: 10px' ></i></a>
                                 <a href='#' onClick='emit({$item->id});return false'><i class='bx bx-trash text-color-danger' style='font-size: 16px;' ></i></a>";
 
+            $parent = ProductCategoryData::where('category_id', $item->parent_id)->first();
+
             $returnArray['data'][] = [
                 $item->id,
                 $item->title,
+                $parent->title ?? '',
                 Carbon::create($item->created_at)->translatedFormat('d M, Y'),
                 $actions
             ];
