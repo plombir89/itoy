@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\About;
-use App\Models\Advantages;
-use App\Models\ContactsLocations;
 use App\Models\Language;
 use App\Models\News;
 use App\Models\Product;
 use App\Models\Slide;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -21,10 +16,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-//        $response = Http::get(env('PRODUCT_API_URL').'api/products',['limit' => 1]);
-//        dd($response->body());
-
         $latestBlogs = News::with(['item' => function($query){
             $query->where('lang', session('lang'));
         }])->where('published', 1)->orderBy('start_date', 'DESC')->take(3)->get();
@@ -41,10 +32,6 @@ class HomeController extends Controller
             $query->where('lang', session('lang'));
         }])->get();
 
-        //dd($special);
-
-        $contacts = ContactsLocations::where('published', true)->orderBy('default', 'DESC')->with('item')->first();
-
         $changeLang = [];
 
         foreach (Language::siteLangs() as $index => $langs){
@@ -55,6 +42,6 @@ class HomeController extends Controller
             $changeLang[$index]['title'] = $langs->title;
         }
 
-        return view('front.home', compact('changeLang','slides', 'contacts', 'featured', 'special', 'latestBlogs'));
+        return view('front.home', compact('changeLang','slides', 'featured', 'special', 'latestBlogs'));
     }
 }

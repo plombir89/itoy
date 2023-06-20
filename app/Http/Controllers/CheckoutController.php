@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Language;
 use App\Models\ProductCategory;
 use App\Services\Basket;
-use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {

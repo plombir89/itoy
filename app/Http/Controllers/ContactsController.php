@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\About;
-use App\Models\AboutData;
-use App\Models\Advantages;
 use App\Models\Contacts;
-use App\Models\ContactsLocations;
 use App\Models\Language;
-use Illuminate\Http\Request;
 
 class ContactsController extends Controller
 {

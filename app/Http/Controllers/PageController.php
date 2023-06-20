@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Language;
 use App\Models\Page;
 use App\Models\PageData;
-use Illuminate\Http\Request;
 
 class PageController extends Controller
 {

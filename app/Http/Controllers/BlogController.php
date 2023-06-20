@@ -6,7 +6,6 @@ use App\Models\Language;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsData;
-use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {

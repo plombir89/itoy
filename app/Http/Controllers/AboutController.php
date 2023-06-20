@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\About;
 use App\Models\AboutData;
-use App\Models\Advantages;
 use App\Models\Language;
-use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
