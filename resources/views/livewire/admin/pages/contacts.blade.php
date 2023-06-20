@@ -163,6 +163,18 @@
                         </div>
 
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-10">
+                            <div class="checkbox-custom checkbox-default">
+                                <input type="checkbox" wire:model="contacts.map_show" id="map_show">
+                                <label for="map_show">{{ __('Show map') }}</label>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
                 <footer class="card-footer">
                     <div class="row justify-content-end">
