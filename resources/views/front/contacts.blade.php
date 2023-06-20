@@ -26,7 +26,7 @@
                                 <div class="col-sm-4 store-address">
                                     <div class="location-title"><i class="fa fa-home"></i>Your Store</div>
                                         <address class="location-detail">
-                                            1{{ $contacts->item->address }}
+                                            {{ $contacts->item->address }}
                                         </address>
                                     </div>
                                 <div class="col-sm-4 store-contact">
