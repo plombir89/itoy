@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -26,6 +27,7 @@ class ContactsForm extends Component
 
     public function send()
     {
+        App::setLocale(session('lang_prefix'));
 
         $data = $this->validate();
 

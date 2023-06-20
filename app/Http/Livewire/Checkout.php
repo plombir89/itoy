@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\Basket;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -32,6 +33,7 @@ class Checkout extends Component
 
     public function confirm()
     {
+        App::setLocale(session('lang_prefix'));
 
         $data = $this->validate();
 
