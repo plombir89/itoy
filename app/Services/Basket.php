@@ -45,6 +45,7 @@ class Basket
 
             if($pivotRow->count < $product->stock){
                 $pivotRow->count++;
+                $pivotRow->price = $product->price;
                 $pivotRow->update();
             }else{
                 throw new \Exception('out_of_stock');
@@ -52,7 +53,7 @@ class Basket
             }
 
         }else{
-            $this->order->products()->attach($product);
+            $this->order->products()->attach($product, ['price' => $product->price]);
         }
 
         if(Auth::check()){
