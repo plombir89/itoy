@@ -59,11 +59,6 @@
                                     {{ __('Contacts') }}
                                 </a>
                             </li>
-                            <li class="{{ request()->routeIs('admin.pages.contacts.locations') || request()->routeIs('admin.pages.contacts.locations.*') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.pages.contacts.locations') }}">
-                                    {{ __('Contacts locations') }}
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-parent {{ request()->routeIs('admin.content.*') ? 'nav-expanded nav-active' : '' }}">
@@ -92,11 +87,6 @@
                             <li class="{{ request()->routeIs('admin.content.services.index') || request()->routeIs('admin.content.services.*') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('admin.content.services.index') }}">
                                     {{ __('Services') }}
-                                </a>
-                            </li>
-                            <li class="{{ request()->routeIs('admin.content.advantages.index') || request()->routeIs('admin.content.advantages.*') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.content.advantages.index') }}">
-                                    {{ __('Advantages') }}
                                 </a>
                             </li>
                             <li class="nav-parent {{ request()->routeIs('admin.content.products.*') ? 'active nav-expanded' : '' }}">

@@ -44,10 +44,6 @@ Route::group(['middleware' => ['auth','isAdmin'], 'prefix' => 'admin', 'as' => '
         });
 
         Route::get('contacts', [\App\Http\Controllers\Admin\Pages\Contacts::class, 'index'])->name('contacts');
-        Route::get('contacts/locations', [\App\Http\Controllers\Admin\Pages\Contacts::class, 'locations'])->name('contacts.locations');
-        Route::post('contacts/locations/get_json', [\App\Http\Controllers\Admin\Pages\Contacts::class, 'get_json'])->name('contacts.get_json');
-        Route::get('contacts/locations/create', [\App\Http\Controllers\Admin\Pages\Contacts::class, 'create'])->name('contacts.locations.create');
-        Route::get('contacts/locations/{location}/edit', [\App\Http\Controllers\Admin\Pages\Contacts::class, 'edit'])->name('contacts.locations.edit');
 
         Route::get('about', [\App\Http\Controllers\Admin\Pages\About::class, 'index'])->name('about');
 
@@ -75,13 +71,6 @@ Route::group(['middleware' => ['auth','isAdmin'], 'prefix' => 'admin', 'as' => '
             Route::get('create', [\App\Http\Controllers\Admin\Content\Services\ServicesController::class, 'create'])->name('create');
             Route::get('{services}/edit', [\App\Http\Controllers\Admin\Content\Services\ServicesController::class, 'edit'])->name('edit');
             Route::post('get_json', [\App\Http\Controllers\Admin\Content\Services\ServicesController::class, 'get_json'])->name('get_json');
-        });
-
-        Route::group(['prefix' => 'advantages', 'as' => 'advantages.'], function(){
-            Route::get('/', [\App\Http\Controllers\Admin\Content\Advantages\IndexController::class, 'index'])->name('index');
-            Route::get('create', [\App\Http\Controllers\Admin\Content\Advantages\IndexController::class, 'create'])->name('create');
-            Route::get('{advantages}/edit', [\App\Http\Controllers\Admin\Content\Advantages\IndexController::class, 'edit'])->name('edit');
-            Route::post('get_json', [\App\Http\Controllers\Admin\Content\Advantages\IndexController::class, 'get_json'])->name('get_json');
         });
 
         Route::group(['prefix' => 'products', 'as' => 'products.'], function(){

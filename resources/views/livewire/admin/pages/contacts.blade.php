@@ -117,6 +117,52 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row pb-3 offset-2" wire:ignore>
+
+
+                        <script type="text/javascript" src="https://maps.google.com/maps/api/js?language={{ app()->getLocale() }}&key=AIzaSyBE9ggkEsrX9Xi7l3IqiCY9up9ke0UA0rE"></script>
+
+                        <script type="text/javascript">
+
+                            function initialize() {
+                                var myLatlng = new google.maps.LatLng({{ $contacts->map_lon }}, {{ $contacts->map_lat }});
+                                var mapOptions = {
+                                    center: myLatlng,
+                                    zoom: {{ $contacts->map_zoom }},
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                };
+
+                                var map = new google.maps.Map(document.getElementById("map_canvas"),
+                                    mapOptions);
+
+                                var marker = new google.maps.Marker({
+                                    position: myLatlng,
+                                    map: map,
+                                    draggable:true,
+                                    icon: '{{ asset('img/factory.png') }}'
+                                });
+
+                                google.maps.event.addListener(marker, 'dragend', function(evt){
+                                @this.set('contacts.map_lon', evt.latLng.lat().toFixed(14));
+                                @this.set('contacts.map_lat', evt.latLng.lng().toFixed(14));
+                                });
+                                google.maps.event.addListener(map, 'zoom_changed', function() {
+                                @this.set('contacts.map_zoom', map.getZoom());
+                                });
+
+                            }
+                            google.maps.event.addDomListener(window, 'load', initialize);
+                        </script>
+
+                        <style type="text/css">
+                            #map_canvas { width: 100%;height:400px;border:2px solid #fff; }
+                        </style>
+                        <div class="col-sm-12">
+                            <p class="pt-2">{{ __('Map') }}</p>
+                            <div id="map_canvas"></div>
+                        </div>
+
+                    </div>
                 </div>
                 <footer class="card-footer">
                     <div class="row justify-content-end">

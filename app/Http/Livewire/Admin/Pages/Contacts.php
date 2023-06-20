@@ -11,6 +11,10 @@ class Contacts extends Component
     public $tab_active = 0;
 
     protected $rules = [
+        'contacts.map_lon' => 'string',
+        'contacts.map_lat' => 'string',
+        'contacts.map_zoom' => 'integer|min:1|max:22',
+        'contacts.map_show' => 'boolean',
         'contacts.email' => 'required|email',
         'contacts.phone' => 'required|string',
         'contacts.items.*.title' => 'required|string|max:255',
@@ -29,6 +33,10 @@ class Contacts extends Component
             'contacts.items.*.address' => __('address'),
             'contacts.phone' => __('phone'),
             'contacts.email' => __('email'),
+            'contacts.map_lon' => __('map longitude'),
+            'contacts.map_lat' => __('map latitude'),
+            'contacts.map_zoom' => __('map zoom'),
+            'contacts.map_show' => __('map show'),
         ]);
 
         $this->contacts->save();

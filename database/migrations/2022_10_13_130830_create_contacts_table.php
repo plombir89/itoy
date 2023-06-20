@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('map_lon')->default(-13.692628);
-            $table->string('map_lat')->default(-38.908133);
-            $table->integer('map_zoom')->default(1);
+            $table->string('map_lon')->default(47.02244142147712);
+            $table->string('map_lat')->default(28.89948418750001);
+            $table->integer('map_zoom')->default(6);
             $table->boolean('map_show')->default(false);
             $table->timestamps();
         });
