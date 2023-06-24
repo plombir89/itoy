@@ -27,8 +27,6 @@ class ContactsForm extends Component
 
     public function send()
     {
-        App::setLocale(session('lang_prefix'));
-
         $data = $this->validate();
 
         Mail::send(new \App\Mail\ContactsForm($data['name'],$data['email'],$data['phone'],$data['message']));

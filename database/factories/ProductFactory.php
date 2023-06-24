@@ -24,6 +24,7 @@ class ProductFactory extends Factory
             'code' => $this->faker->randomNumber(6),
             'featured' => rand(0,1),
             'special' => rand(0,1),
+            'stock' => rand(1,5.),
         ];
     }
 }

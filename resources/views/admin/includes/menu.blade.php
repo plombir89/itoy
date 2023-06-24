@@ -38,6 +38,26 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="nav-parent {{ request()->routeIs('admin.orders.*') ? 'nav-expanded nav-active' : '' }}">
+                        <a class="nav-link" href="#">
+                            <i class='bx bx-info-circle'></i>
+                            <span>{{ __('Orders') }}</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="{{ request()->routeIs('admin.orders.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                                    {{ __('Orders list') }}
+                                </a>
+                            </li>
+                            <li class="{{ request()->routeIs('admin.orders.customers') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.orders.customers') }}">
+                                    {{ __('Customers List') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nav-parent {{ request()->routeIs('admin.pages.*') ? 'nav-expanded nav-active' : '' }}">
                         <a class="nav-link" href="#">
                             <i class="bx bx-layout" aria-hidden="true"></i>

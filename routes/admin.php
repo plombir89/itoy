@@ -34,6 +34,17 @@ Route::group(['middleware' => ['auth','isAdmin'], 'prefix' => 'admin', 'as' => '
 
     });
 
+    Route::group(['prefix' => 'orders', 'as' => 'orders.'], function(){
+
+        Route::get('/', [\App\Http\Controllers\Admin\Order\IndexController::class, 'index'])->name('index');
+
+        Route::group(['prefix' => 'order', 'as' => 'order.'], function(){
+            Route::get('{page}', [\App\Http\Controllers\Admin\Order\IndexController::class, 'show'])->name('show');
+        });
+
+        Route::get('/customers', [\App\Http\Controllers\Admin\Order\CustomersController::class, 'index'])->name('customers');
+    });
+
     Route::group(['prefix' => 'pages', 'as' => 'pages.'], function(){
 
         Route::group(['prefix' => 'page', 'as' => 'page.'], function(){

@@ -20,6 +20,7 @@ use App\Services\Basket;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -46,12 +47,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(!session('lang')){
-            session(['lang' => Language::defaultLang()->id]);
-            session(['lang_prefix' => Language::defaultLang()->prefix]);
 
-            $this->app->setLocale(session('lang_prefix'));
-        }
+//dd(Session::get('lang'));
+
+
+//        if(!session('lang')){
+//            session(['lang' => Language::defaultLang()->id]);
+//            session(['lang_prefix' => Language::defaultLang()->prefix]);
+//            dd(session('lang'));
+//        }
+//
+//        $this->app->setLocale(session('lang_prefix', 'en'));
 
         view()->composer('admin.*', function () {
             View::share('adminlanguages', Language::getAdminLangs());

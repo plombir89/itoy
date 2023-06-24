@@ -51,7 +51,7 @@ Route::match(['GET', 'POST'], '/add/{product}', [BasketController::class, 'add']
 
 Route::get('/cart/info', [BasketController::class, 'cartInfo'])->name('cart.info');
 
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout')->middleware('basket_not_empty');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout')->middleware(['basket_not_empty','checklocale']);
 Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search');
 
 Route::group(['middleware' => 'basket_not_empty','prefix' => 'cart'], function(){

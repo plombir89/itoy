@@ -119,7 +119,7 @@
 
         <!-- end: sidebar -->
 
-        <section role="main" class="content-body">
+        <section role="main" class="content-body content-body-modern mt-0">
             <header class="page-header">
                 <h2>@yield('layout', __('Dashboard'))</h2>
 

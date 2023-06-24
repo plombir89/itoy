@@ -34,6 +34,16 @@
                         </div>
 
                         <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="input-firstname">{{ __('Phone') }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="{{ __('Phone') }}" id="input-phone" class="form-control">
+                                @error('phone')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group required">
                             <label class="col-sm-2 control-label" for="input-city">{{ __('City') }}</label>
                             <div class="col-sm-10">
                                 <input type="text" name="city" value="{{ old('city') }}" placeholder="{{ __('City') }}" id="input-city" class="form-control">
