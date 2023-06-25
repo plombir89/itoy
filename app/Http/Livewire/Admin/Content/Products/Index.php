@@ -20,8 +20,6 @@ class Index extends Component
 
     public function remove()
     {
-        Storage::delete($this->productToRemove->img);
-        Storage::deleteDirectory('products/'.$this->productToRemove->id);
         $this->productToRemove->delete();
         $this->dispatchBrowserEvent('updatetable');
     }

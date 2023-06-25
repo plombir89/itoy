@@ -9,6 +9,7 @@ use App\Models\ProductCategoryData;
 use App\Models\ProductData;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use function PHPUnit\Framework\assertClassNotHasAttribute;
@@ -87,7 +88,7 @@ class Create extends Component
     public function save()
     {
         $data = $this->validate($this->rules + [
-            'img' => 'required|image|dimensions:width='.config('admin.products.image_upload_width').',height='.config('admin.products.image_upload_height')
+            'img' => 'required|image'
         ],[],[
             'product_data.*.title' => __('title'),
             'product_data.*.text' => __('text'),
@@ -99,10 +100,16 @@ class Create extends Component
             'product.featured' => __('featured'),
             'product.special' => __('special'),
         ]);
-
         //dd($this->selected_categories);
 
-        $image = $this->img->store('products');
+
+        $img = Image::make($this->img);
+
+        $imgname = Str::slug($this->product_data[Language::defaultLang()->id]['title']).'-'.time(). '.'. $this->img->getClientOriginalExtension();
+
+        $img->fit($img->height() > $img->width() ? $img->width() : $img->height());
+
+        $img->save(storage_path('app/public/products/'. $imgname));
 
         $product = Product::create([
             'published' => $data['product']['published'],
@@ -112,8 +119,10 @@ class Create extends Component
             'stock' => $data['product']['stock'],
             'featured' => $data['product']['featured'],
             'special' => $data['product']['special'],
-            'img' => $image
+            'img' => 'products/'.$imgname
         ]);
+
+
 
         $product->category()->sync($this->selected_categories);
 

@@ -9,6 +9,7 @@ use App\Models\ProductSubCategoryData;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -71,7 +72,7 @@ class Edit extends Component
     public function save(){
 
         $this->validate($this->rules + [
-                'img' => 'nullable|image|dimensions:width='.config('admin.products.image_upload_width').',height='.config('admin.products.image_upload_height')
+                'img' => 'nullable|image'
             ],[],[
             'product.items.*.title' => __('title'),
             'product.items.*.text' => __('text'),
@@ -85,11 +86,18 @@ class Edit extends Component
         ]);
 
         if($this->img){
-            $image = $this->img->store('product');
+
+            $img = Image::make($this->img);
+
+            $imgname = Str::slug($this->product['items'][0]['title']).'-'.time(). '.'. $this->img->getClientOriginalExtension();
+
+            $img->fit($img->height() > $img->width() ? $img->width() : $img->height());
+
+            $img->save(storage_path('app/public/products/'. $imgname));
 
             Storage::delete($this->product->img);
 
-            $this->product->img = $image;
+            $this->product->img = 'products/'.$imgname;
         }
 
         foreach ($this->product->items as $item) {

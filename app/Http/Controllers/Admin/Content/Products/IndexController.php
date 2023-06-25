@@ -85,7 +85,7 @@ class IndexController extends Controller
             ->join('product_data', 'product_data.product_id', '=', 'products.id')
             ->join('languages', 'languages.id', '=', 'product_data.lang')
             ->select([DB::raw("SQL_CALC_FOUND_ROWS products.id,products.published,products.created_at,product_data.title")])
-            ->where(["product_data.lang" => $lang])
+            ->where(["product_data.lang" => $lang, "products.deleted_at" => null])
             ->orderBy($order, $dir)->take($limit)->offset($start)->get();
 
 
@@ -128,7 +128,7 @@ class IndexController extends Controller
     public function upload(Request $request, $product)
     {
         $request->validate([
-            'file' => 'required|dimensions:width=770,height=450',
+            'file' => 'required',
         ]);
 
         $path = $request->file('file')->store('/products/'.$product);

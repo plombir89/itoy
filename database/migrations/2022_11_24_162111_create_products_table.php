@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('special')->default(false);
             $table->integer('reviews')->default(0);
             $table->integer('rating')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
