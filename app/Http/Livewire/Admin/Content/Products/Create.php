@@ -37,7 +37,7 @@ class Create extends Component
         $product = new Product([
             'published' => false,
             'adminprice' => '',
-            'admindiscount' => '',
+            'admindiscount' => 0,
             'stock' => 1,
             'featured' => 0,
             'special' => 0,

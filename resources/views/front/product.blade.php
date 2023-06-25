@@ -2,6 +2,10 @@
 
 @section('title', $data->title)
 
+@section('keywords', $data->keywords)
+
+@section('description', $data->description)
+
 @section('content')
 
     <div id="product-product" class="container">
