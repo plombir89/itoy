@@ -34,7 +34,7 @@ class ProductSeeder extends Seeder
                 ]);
             }
 
-            Product::factory(3)->create()->each(function($product) use ($productcategory){
+            Product::factory(2)->create()->each(function($product) use ($productcategory){
 
                 ProductsCategories::create(['product_id' => $product->id, 'category_id' => $productcategory->id]);
 
