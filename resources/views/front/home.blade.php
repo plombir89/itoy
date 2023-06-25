@@ -428,37 +428,37 @@
                                     <div id="ishimanufacturer-1071435732" class="manufacturerblock">
                                         <div class="owl-carousel">
                                             <div class="item">
-                                                <a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=product/manufacturer/info&manufacturer_id=8">
+                                                <a href="#">
                                                     <img src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/brand/Brand-Logo-1-194x80.png"
                                                          alt="Apple" class="img-responsive"/>
                                                 </a>
                                             </div>
                                             <div class="item">
-                                                <a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=product/manufacturer/info&manufacturer_id=9">
+                                                <a href="#">
                                                     <img src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/brand/Brand-Logo-2-194x80.png"
                                                          alt="Canon" class="img-responsive"/>
                                                 </a>
                                             </div>
                                             <div class="item">
-                                                <a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=product/manufacturer/info&manufacturer_id=7">
+                                                <a href="#">
                                                     <img src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/brand/Brand-Logo-3-194x80.png"
                                                          alt="Hewlett-Packard" class="img-responsive"/>
                                                 </a>
                                             </div>
                                             <div class="item">
-                                                <a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=product/manufacturer/info&manufacturer_id=5">
+                                                <a href="#">
                                                     <img src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/brand/Brand-Logo-4-194x80.png"
                                                          alt="HTC" class="img-responsive"/>
                                                 </a>
                                             </div>
                                             <div class="item">
-                                                <a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=product/manufacturer/info&manufacturer_id=6">
+                                                <a href="#">
                                                     <img src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/brand/Brand-Logo-5-194x80.png"
                                                          alt="Palm" class="img-responsive"/>
                                                 </a>
                                             </div>
                                             <div class="item">
-                                                <a href="https://demo.ishithemes.com/opencart/OPC073/index.php?route=product/manufacturer/info&manufacturer_id=10">
+                                                <a href="#">
                                                     <img src="https://demo.ishithemes.com/opencart/OPC073/image/cache/catalog/brand/Brand-Logo-6-194x80.png"
                                                          alt="Sony" class="img-responsive"/>
                                                 </a>

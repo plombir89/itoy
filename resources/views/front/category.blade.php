@@ -7,98 +7,98 @@
                 <aside id="column-left" class="col-sm-3 hidden-xs">
                     @include('front.blocks.categories')
 
-                    <div class="filterbox">
-                        <div class="page-title hidden-sm hidden-xs">Refine Search</div>
-                        <div class="block-title clearfix  hidden-lg hidden-md collapsed"
-                             data-target="#filterbox-container" data-toggle="collapse">
-                            <span class="page-title">Refine Search</span>
-                            <span class="navbar-toggler collapse-icons">
-                          <i class="fa fa-angle-down add"></i>
-                          <i class="fa fa-angle-up remove"></i>
-                        </span>
-                        </div>
-                        <div id="filterbox-container" class="collapse data-toggler">
-                            <div class="list-group-filter">
+{{--                    <div class="filterbox">--}}
+{{--                        <div class="page-title hidden-sm hidden-xs">Refine Search</div>--}}
+{{--                        <div class="block-title clearfix  hidden-lg hidden-md collapsed"--}}
+{{--                             data-target="#filterbox-container" data-toggle="collapse">--}}
+{{--                            <span class="page-title">Refine Search</span>--}}
+{{--                            <span class="navbar-toggler collapse-icons">--}}
+{{--                          <i class="fa fa-angle-down add"></i>--}}
+{{--                          <i class="fa fa-angle-up remove"></i>--}}
+{{--                        </span>--}}
+{{--                        </div>--}}
+{{--                        <div id="filterbox-container" class="collapse data-toggler">--}}
+{{--                            <div class="list-group-filter">--}}
 
-                                <a class="list-group-item group-name">Size</a>
-                                <div class="list-group-item">
-                                    <div id="filter-group1">
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="1">
-                                                S (1)
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="2">
-                                                M (1)
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="3">
-                                                L (0)
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="4">
-                                                XL (0)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <a class="list-group-item group-name">Size</a>--}}
+{{--                                <div class="list-group-item">--}}
+{{--                                    <div id="filter-group1">--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="1">--}}
+{{--                                                S (1)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="2">--}}
+{{--                                                M (1)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="3">--}}
+{{--                                                L (0)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="4">--}}
+{{--                                                XL (0)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
-                                <a class="list-group-item group-name">Colour</a>
-                                <div class="list-group-item">
-                                    <div id="filter-group2">
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="5">
-                                                Red (1)
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="6">
-                                                Green (1)
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="7">
-                                                Blue (0)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <a class="list-group-item group-name">Colour</a>--}}
+{{--                                <div class="list-group-item">--}}
+{{--                                    <div id="filter-group2">--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="5">--}}
+{{--                                                Red (1)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="6">--}}
+{{--                                                Green (1)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="7">--}}
+{{--                                                Blue (0)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
-                                <a class="list-group-item group-name">Price</a>
-                                <div class="list-group-item">
-                                    <div id="filter-group3">
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="8">
-                                                $8.00 - $10.00 (1)
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label> <input type="checkbox" name="filter[]" value="9">
-                                                $11.00 - $14.00 (1)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer text-left">
-                                <button type="button" id="button-filter" class="btn btn-primary">Refine Search</button>
-                            </div>
-                        </div>
-                    </div>
-                    <script type="text/javascript"><!--
-                        $('#button-filter').on('click', function () {
-                            filter = [];
+{{--                                <a class="list-group-item group-name">Price</a>--}}
+{{--                                <div class="list-group-item">--}}
+{{--                                    <div id="filter-group3">--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="8">--}}
+{{--                                                $8.00 - $10.00 (1)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="checkbox">--}}
+{{--                                            <label> <input type="checkbox" name="filter[]" value="9">--}}
+{{--                                                $11.00 - $14.00 (1)--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="panel-footer text-left">--}}
+{{--                                <button type="button" id="button-filter" class="btn btn-primary">Refine Search</button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <script type="text/javascript"><!----}}
+{{--                        $('#button-filter').on('click', function () {--}}
+{{--                            filter = [];--}}
 
-                            $('input[name^=\'filter\']:checked').each(function (element) {
-                                filter.push(this.value);
-                            });
+{{--                            $('input[name^=\'filter\']:checked').each(function (element) {--}}
+{{--                                filter.push(this.value);--}}
+{{--                            });--}}
 
-                            location = 'product/category&path=20&limit=5&filter=' + filter.join(',');
-                        });
-                        //--></script>
+{{--                            location = 'product/category&path=20&limit=5&filter=' + filter.join(',');--}}
+{{--                        });--}}
+{{--                        //--></script>--}}
 
                     @include('front.blocks.banner')
 
