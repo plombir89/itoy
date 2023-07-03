@@ -3,11 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\Delivery;
-use App\Models\User;
 use App\Services\Basket;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Checkout extends Component
@@ -35,16 +32,12 @@ class Checkout extends Component
 
     protected $rules = [
         'delivery' => 'nullable|exists:deliveries,id',
-        'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|required_if:delivery,""',
-        'email' => 'nullable|email|required_if:delivery,""',
-        'name' => 'nullable|string|min:3|max:50|required_if:delivery,""',
-        'city' => 'nullable|string|min:3|max:50|required_if:delivery,""',
-        'address' => 'nullable|string|min:3|max:255|required_if:delivery,""',
-        'postal_code' => 'nullable|string|min:3|max:20|required_if:delivery,""',
-    ];
-
-    protected $messages = [
-        'required_if' => 'The :attribute cannot be empty.',
+        'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|required_if:delivery,null',
+        'email' => 'nullable|email|required_if:delivery,null',
+        'name' => 'nullable|string|min:3|max:50|required_if:delivery,null',
+        'city' => 'nullable|string|min:3|max:50|required_if:delivery,null',
+        'address' => 'nullable|string|min:3|max:255|required_if:delivery,null',
+        'postal_code' => 'nullable|string|min:3|max:20|required_if:delivery,null',
     ];
 
     public function updated($propertyName)
@@ -52,11 +45,25 @@ class Checkout extends Component
         $this->validateOnly($propertyName);
     }
 
+//    protected $validationAttributes = [
+//        'name' => @trans('Name')
+//    ];
+
     public function confirm()
     {
-dd($this->delivery);
-        $data = $this->validate();
-
+        if($this->delivery === ''){
+            $this->delivery = null;
+        }
+        //dd($this->delivery);
+        $data = $this->validate($this->rules,[],[
+            'name' => __("Name"),
+            'phone' => __("Phone"),
+            'email' => __("Email"),
+            'city' => __("City"),
+            'address' => __("Address"),
+            'postal_code' => __("Postal code"),
+        ]);
+        //dd($data);
         if($data['delivery'] != ''){
             $data = Delivery::where('id', $data['delivery'])->first()->toArray();
         }

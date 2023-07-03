@@ -19,7 +19,7 @@ class EditController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = route('account.edit');
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;
@@ -38,6 +38,6 @@ class EditController extends Controller
 
         auth()->user()->update($data);
 
-        return redirect()->route('account.index')->with('message', 'Success: Your account has been successfully updated.');
+        return redirect()->route('account.index')->with('message', trans('translates.account_updated'));
     }
 }

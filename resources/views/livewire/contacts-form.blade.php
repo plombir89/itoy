@@ -1,39 +1,39 @@
-<form action="/contact" method="post" class="form-horizontal">
+<form action="#" method="post" class="form-horizontal">
     <fieldset>
-        <legend>Contact Form</legend>
-        <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-name">{{ __('Your Name') }}</label>
+        <legend>{{ __('Contact Form') }}</legend>
+        <div class="form-group required @error('name') has-error @enderror">
+            <label class="col-sm-2 control-label" for="input-name">{{ __('Name') }}</label>
             <div class="col-sm-10">
                 <input type="text" wire:model="name" id="input-name" class="form-control">
                 @error('name')
-                    <span class="form-validation">{{ $message }}</span>
+                    <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-email">{{ __('E-Mail Address') }}</label>
+        <div class="form-group @error('email') has-error @enderror">
+            <label class="col-sm-2 control-label" for="input-email">{{ __('E-Mail') }}</label>
             <div class="col-sm-10">
                 <input type="text" wire:model="email" id="input-email" class="form-control">
                 @error('email')
-                    <span class="form-validation">{{ $message }}</span>
+                    <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group required @error('phone') has-error @enderror">
             <label class="col-sm-2 control-label" for="input-phone">{{ __('Phone') }}</label>
             <div class="col-sm-10">
                 <input type="text" wire:model="phone" id="input-phone" class="form-control">
                 @error('phone')
-                    <span class="form-validation">{{ $message }}</span>
+                    <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group required @error('message') has-error @enderror">
             <label class="col-sm-2 control-label" for="input-enquiry">{{ __('Message') }}</label>
             <div class="col-sm-10">
                 <textarea wire:model="message" rows="5" id="input-enquiry" class="form-control"></textarea>
                 @error('message')
-                    <span class="form-validation">{{ $message }}</span>
+                    <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
         </div>

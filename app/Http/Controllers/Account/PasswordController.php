@@ -17,7 +17,7 @@ class PasswordController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = route('account.password');
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;
@@ -35,13 +35,13 @@ class PasswordController extends Controller
         ]);
 
         if(!Hash::check($request->password, auth()->user()->password)){
-            return back()->with("error", "Old Password Doesn't match!");
+            return back()->with("error", trans('translates.password_not_match'));
         }
 
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->new_password)
         ]);
 
-        return back()->with("message", "Password changed successfully!");
+        return back()->with("message", trans('translates.password_changed'));
     }
 }

@@ -27,16 +27,14 @@ return [
         /**
          * Directories which should be looked inside.
          */
-        'dirs'      => ['resources/views/front'],
+        'dirs'      => ['resources/views/front', 'resources/views/auth', 'resources/views/livewire'],
 
         /**
          * Patterns by which files should be queried.
          * The values can be a regular expression, glob, or just a string.
          */
         'patterns'  => ['*.php'],
-        'exclude' => [
-            //
-        ],
+        'exclude' => [],
         /**
          * Functions that the strings will be extracted from.
          * Add here any custom defined functions.

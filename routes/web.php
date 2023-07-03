@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth', 'prefix' => 'account'], function(){
+Route::group(['middleware' => ['auth','checklocale'], 'prefix' => 'account'], function(){
     Route::get('/', [App\Http\Controllers\Account\IndexController::class, 'index'])->name('account.index');
     Route::get('edit', [App\Http\Controllers\Account\EditController::class, 'index'])->name('account.edit');
     Route::patch('update', [App\Http\Controllers\Account\EditController::class, 'update'])->name('account.update');
@@ -42,19 +42,19 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function(){
 
 });
 
-Route::post('wishlist/add/{product}', [App\Http\Controllers\Account\WhishlistController::class, 'add'])->name('account.wishlist.add');
+Route::post('wishlist/add/{product}', [App\Http\Controllers\Account\WhishlistController::class, 'add'])->name('account.wishlist.add')->middleware(['checklocale']);
 
-Route::post('product/review', [App\Http\Controllers\ProductsController::class, 'rating_store'])->name('product.review.store');
+Route::post('product/review', [App\Http\Controllers\ProductsController::class, 'rating_store'])->name('product.review.store')->middleware(['checklocale']);
 
 
-Route::match(['GET', 'POST'], '/add/{product}', [BasketController::class, 'add'])->name('basket.add');
+Route::match(['GET', 'POST'], '/add/{product}', [BasketController::class, 'add'])->name('basket.add')->middleware(['checklocale']);
 
-Route::get('/cart/info', [BasketController::class, 'cartInfo'])->name('cart.info');
+Route::get('/cart/info', [BasketController::class, 'cartInfo'])->name('cart.info')->middleware(['checklocale']);
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout')->middleware(['basket_not_empty','checklocale']);
 Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search');
 
-Route::group(['middleware' => 'basket_not_empty','prefix' => 'cart'], function(){
+Route::group(['middleware' => ['basket_not_empty','checklocale'],'prefix' => 'cart'], function(){
     Route::get('/', [BasketController::class, 'basket'])->name('basket');
     Route::get('/place', [BasketController::class, 'basketPlace'])->name('basket.place');
     Route::post('/remove/{product}', [BasketController::class, 'remove'])->name('basket.remove');
@@ -102,3 +102,4 @@ Route::prefix('{locale}')->middleware('checklocale')->group(function (){
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->middleware('checklocale')->name('home');
 
+Route::get('/lang/{prefix}', [\App\Http\Controllers\LanguageController::class, 'index'])->name('change.lang');

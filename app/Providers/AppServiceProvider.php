@@ -48,6 +48,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
+
+
 //dd(Session::get('lang'));
 
 

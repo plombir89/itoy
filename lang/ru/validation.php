@@ -10,7 +10,7 @@ return [
     | The following language lines contain the default error messages used by
     | the validator class. Some of these rules have multiple versions such
     | as the size rules. Feel free to tweak each of these messages here.
-    |   
+    |
     */
 
     'accepted'             => 'Необходимо принять :attribute.',
@@ -62,13 +62,13 @@ return [
     'present'              => 'Должно присутствовать поле атрибута :attribute.',
     'regex'                => 'Неправильный формат атрибута :attribute.',
     'required'             => 'Поле атрибута :attribute обязательно.',
-    'required_if'          => 'Когда :other является :value - поле атрибута :attribute обязательно.',
+    'required_if'          => 'Поле атрибута :attribute обязательно.',
     'required_unless'      => 'Поле атрибута :attribute обязательно за исключением случаев, когда :other находится в :values.',
     'required_with'        => 'Поле атрибута :attribute обязательно, когда :values присутствует.',
     'required_with_all'    => 'Поле атрибута :attribute обязательно, когда :values присутствует.',
     'required_without'     => 'Поле атрибута :attribute обязательно, когда :values отсутствует.',
     'required_without_all' => 'Поле атрибута :attribute обязательно, когда нет ни одного значения :values .',
-    'same'                 => ':attribute и :other должны совпадать.', 
+    'same'                 => ':attribute и :other должны совпадать.',
     'size'                 => [
         'numeric' => ':attribute должен быть :size.',
         'file'    => ':attribute должен быть :size килобайт.',

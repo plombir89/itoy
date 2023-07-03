@@ -19,7 +19,7 @@ class AddressController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = route('account.address');
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;
@@ -34,7 +34,7 @@ class AddressController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = route('account.address.add');
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;
@@ -79,7 +79,7 @@ class AddressController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = route('account.address.edit', $delivery);
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;
@@ -114,13 +114,13 @@ class AddressController extends Controller
 
 
 
-        return redirect()->route('account.address')->with('message', 'Your address has been successfully updated');
+        return redirect()->route('account.address')->with('message', trans('translates.address_updated'));
     }
 
     public function delete(Request $request, Delivery $delivery)
     {
         $delivery->delete();
 
-        return redirect()->route('account.address')->with('message', 'Your address has been successfully updated');
+        return redirect()->route('account.address')->with('message', trans('translates.address_updated'));
     }
 }

@@ -61,7 +61,7 @@ return [
     'present' => 'Cîmpul atributului :attribute trebuie să fie prezent.',
     'regex' => 'Formatul atributului :attribute nu e valid.',
     'required' => 'Cîmpul :attribute este obligatoriu.',
-    'required_if' => 'Cîmpul atributului :attribute este obligatoriu cînd :other este :value.',
+    'required_if' => 'Cîmpul :attribute este obligatoriu.',
     'required_unless' => 'Cîmpul atributului :attribute este obligatoriu dacă :other nu este în :values.',
     'required_with' => 'Cîmpul atributului :attribute este obligatoriu cînd :values este prezent.',
     'required_without' => 'Cîmpul atributului :attribute este obligatoriu cînd :values nu este prezent.',

@@ -20,7 +20,7 @@ class WhishlistController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = route('account.wishlist');
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;
@@ -33,7 +33,7 @@ class WhishlistController extends Controller
     {
         if(!Auth::check()){
             $response = [
-                'message' => 'You must <a href="/login">login</a> or <a href="/register">create an account</a> to save products to your <a href="/account/wishlist">wish list</a>!',
+                'message' => trans('translates.wishlist_must_login', ['login' => route('login'),'register' => route('register'), 'wishlist' => route('account.wishlist')]),
             ];
 
             return response()->json($response, 401);
@@ -43,7 +43,7 @@ class WhishlistController extends Controller
 
         if($user->wishlist->contains($product->id)){
             $response = [
-                'success' => 'Success: You have added <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a> to your <a href="'.route('account.wishlist').'\">wish list</a>!',
+                'success' => trans('translates.wishlist_added', ['produs' => '<a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>', 'wishlist' => route('account.wishlist')]),
                 'total' => 'Wishlist ('.$user->wishlist->count().')'
             ];
 
@@ -51,7 +51,7 @@ class WhishlistController extends Controller
             $user->wishlist()->attach($product->id);
 
             $response = [
-                'success' => 'Success: You have added <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a> to your <a href="'.route('account.wishlist').'\">wish list</a>!',
+                'success' => trans('translates.wishlist_added', ['produs' => '<a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>', 'wishlist' => route('account.wishlist')]),
                 'total' => 'Wishlist ('.$user->wishlist->count().')'
             ];
         }

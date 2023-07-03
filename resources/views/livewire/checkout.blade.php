@@ -1,7 +1,7 @@
 <div>
     @if (session()->has('confirmed'))
             <h1>{{ __('Your order has been placed!') }}</h1>
-            <p>You can view your order history by going to the <a href="{{ route('account.index') }}">my account</a> page and by clicking on <a href="{{ route('orders.index') }}">history</a>.</p>
+            @auth<p>{!! trans('translates.view_your_order_history', ['account' => route('account.index'), 'history' => route('orders.index')]) !!}</p>@endauth
             <p>{{ __('Thanks for shopping with us online!') }}</p>
     @else
 
@@ -24,7 +24,7 @@
         <div id="new-address">
             <div class="col-sm-6">
                 <fieldset id="account">
-                    <legend>Your Personal Details</legend>
+                    <legend>{{ __('Your Personal Details') }}</legend>
                     <div class="form-group required @error('name') has-error @enderror">
                         <label class="control-label" for="input-payment-firstname">{{ __('First Name, Last Name') }}</label>
                         <input type="text" wire:model.lazy="name" placeholder="{{ __('First Name, Last Name') }}" id="input-payment-firstname" class="form-control" />
@@ -50,7 +50,7 @@
             </div>
             <div class="col-sm-6">
                 <fieldset id="address">
-                    <legend>Your Address</legend>
+                    <legend>{{ __('Your Address') }}</legend>
                     <div class="form-group required @error('city') has-error @enderror">
                         <label class="control-label" for="input-city">{{ __('City') }}</label>
                         <input type="text" wire:model.lazy="city" placeholder="{{ __('City') }}" id="input-city" class="form-control" />
@@ -76,11 +76,10 @@
             </div>
         </div>
             @endif
-
     </div>
     <div class="buttons">
         <div class="pull-right">
-            <input type="button" value="Confirm Order" class="btn btn-primary" wire:click="confirm">
+            <input type="button" value="{{ __('Confirm Order') }}" class="btn btn-primary" wire:click="confirm">
         </div>
     </div>
 

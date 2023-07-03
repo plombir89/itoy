@@ -22,7 +22,7 @@
                     </ul>
                 </div>
                 <div class="a-link-list">
-                    <div class="a-link-heading"><h2>My Account</h2></div>
+                    <div class="a-link-heading"><h2>{{ __('My Account') }}</h2></div>
                     <div class="a-link-content">
                         <ul class="list-unstyled">
                             <li><a href="{{ route('account.edit') }}">{{ __('Edit your account information') }}</a></li>

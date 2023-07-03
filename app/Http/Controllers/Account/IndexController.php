@@ -15,7 +15,7 @@ class IndexController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = route('account.index');
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;

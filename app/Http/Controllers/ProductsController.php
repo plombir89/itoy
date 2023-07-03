@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductData;
 use App\Models\ProductRating;
+use App\Services\SiteData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,6 +88,22 @@ class ProductsController extends Controller
 
         $reviews = ProductRating::where(['product_id' => $data->parent->id,'status' => 1])->with('user')->get();
 
+//        $related = ProductCategory::query()->with(['products' => function($query) use($data){
+//            $query->where('product_id', $data->parent->id);
+//        }])->get();
+
+        $cats = collect($data->parent->category)->map(function ($cat) {
+            return $cat->id;
+        });
+
+        $related = Product::whereHas('category' , function($query) use($cats){
+            $query->whereIn('product_categories.id', $cats);
+        })->with(['item' => function($query){
+            $query->where('lang', session('lang'));
+        }])->where('published', 1)->where('id', '!=', $data->parent->id)->inRandomOrder()->limit(10)->get();
+
+
+        //dd($related);
         $changeLang = [];
 
         foreach (Language::siteLangs() as $index => $langs){
@@ -100,14 +117,14 @@ class ProductsController extends Controller
             $changeLang[$index]['title'] = $langs->title;
         }
 
-        return view('front.product', compact('changeLang', 'lang', 'data', 'categories', 'reviews'));
+        return view('front.product', compact('changeLang', 'lang', 'data', 'categories', 'reviews', 'related'));
     }
 
     public function rating_store(Request $request)
     {
         if(!Auth::check()){
             return response()->json([
-                'warning' => 'You must be loggedin'
+                'warning' => trans('translates.must_be_loggedin')
             ], 401);
         }
 
@@ -116,7 +133,7 @@ class ProductsController extends Controller
             'text' => 'required|string|min:25|max:300',
             'rating' => 'required|in:1,2,3,4,5'
         ],[
-            'rating' => 'Select rating'
+            'rating' => trans('translates.select_rating')
         ]);
 
         ProductRating::create([
@@ -127,7 +144,7 @@ class ProductsController extends Controller
         ]);
 
         $resp = [
-            'success' => 'Thank you for your review. It has been submitted to the webmaster for approval.'
+            'success' => trans('translates.review_submitted')
         ];
 
         return response()->json($resp, 201);

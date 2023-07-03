@@ -251,7 +251,7 @@
           <rect x="85.333" y="70.333" width="230.557" height="35.667"/>
           <rect x="85.333" y="160.667" width="230.557" height="35.667"/>
           <rect x="85.333" y="250" width="230.557" height="35.667"/></svg>
-        </span>Shop By Categories
+        </span>{{ __('Shop By Categories') }}
                         </h2>
                         <ul id="top-menu" class="top-menu" data-depth="0">
                             @foreach($categories as $category)

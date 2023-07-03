@@ -28,7 +28,7 @@ class BasketController extends Controller
 
         foreach (Language::siteLangs() as $index => $langs){
             $changeLang[$index]['id'] = $langs->id;
-            $changeLang[$index]['link'] = '/'.$langs->prefix;
+            $changeLang[$index]['link'] = route('change.lang', $langs->prefix);
             $changeLang[$index]['name'] = $langs->prefix;
             $changeLang[$index]['icon'] = $langs->icon;
             $changeLang[$index]['title'] = $langs->title;
@@ -59,7 +59,7 @@ class BasketController extends Controller
         if(!$product->isAvailable()){
 
             $response = [
-                'warning' => 'Product <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>, out of stock',
+                'warning' => trans('translates.product_out_of_stock', ['product' => '<a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>']),
             ];
 
             if ($request->isMethod('GET')) {
@@ -78,7 +78,7 @@ class BasketController extends Controller
         }catch (\Exception $e){
 
             $response = [
-                'warning' => 'Product <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>, Only '.$product->stock.' items is available',
+                'warning' => trans('translates.product_items_is_available', ['product' => '<a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>','count' => $product->stock]),
             ];
 
             if ($request->isMethod('GET')) {
@@ -91,7 +91,7 @@ class BasketController extends Controller
         $order = (new Basket())->getOrder();
 
         $response = [
-            'success' => 'Success: You have added <a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a> to your <a href="'.route('basket').'\">shopping cart</a>!',
+            'success' => trans('translates.product_added', ['product' => '<a href="'.route('product.show', [app()->getLocale(), $product->item->slug]).'">'.$product->item->title.'</a>', 'cart' => route('basket')], session('lang_prefix')),
             'total' => 'item',
             'text_items_small' => $order->products->count()
         ];
@@ -121,7 +121,7 @@ class BasketController extends Controller
         $order = $basket->getOrder();
 
         $response = [
-            'success' => 'Success: You have modified your shopping cart!',
+            'success' => trans('translates.success_modified_shopping_cart'),
             'total' => 'item',
             'text_items_small' => $order->products->count()
         ];

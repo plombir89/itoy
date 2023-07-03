@@ -1,8 +1,11 @@
 @extends('front.layouts.main')
 
+@section('title', __('Contacts'))
+
 @section('content')
     <div id="information-contact" class="container">
-        <div class="wrapper_container row">		<aside id="column-left" class="col-sm-3 hidden-xs">
+        <div class="wrapper_container row">
+            <aside id="column-left" class="col-sm-3 hidden-xs">
                 @include('front.blocks.categories')
 
                 @include('front.blocks.banner')
@@ -15,16 +18,16 @@
                     <h1 class="page-title">{{ __('Contact Us') }}</h1>
                     <ul class="breadcrumb">
                         <li><a href="/"><i class="fa fa-home"></i></a></li>
-                        <li><a href="#">{{ __('Contact Us') }}</a></li>
+                        <li><a href="#">{{ __('Contacts') }}</a></li>
                     </ul>
                 </div>
-                <h3>Our Location</h3>
+                <h3>{{ __('Our Location') }}</h3>
                 <div class="panel panel-default contact-location">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-sm-4 store-address">
-                                    <div class="location-title"><i class="fa fa-home"></i>Your Store</div>
+                                    <div class="location-title"><i class="fa fa-home"></i>{{ __('Your Store') }}</div>
                                         <address class="location-detail">
                                             {{ $contacts->item->address }}
                                         </address>
