@@ -27,7 +27,7 @@ return [
         /**
          * Directories which should be looked inside.
          */
-        'dirs'      => ['resources/views/front', 'resources/views/auth', 'resources/views/livewire'],
+        'dirs'      => ['resources/views/front', 'resources/views/auth', 'resources/views/livewire/front'],
 
         /**
          * Patterns by which files should be queried.
@@ -39,8 +39,10 @@ return [
          * Functions that the strings will be extracted from.
          * Add here any custom defined functions.
          * NOTE: The translation string should always be the first argument.
+         *
+         * 'trans', '@lang'
          */
-        'functions' => ['__', 'trans', '@lang']
+        'functions' => ['__']
     ],
 
     /**

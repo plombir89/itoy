@@ -38,6 +38,6 @@ class ContactsForm extends Component
 
     public function render()
     {
-        return view('livewire.contacts-form');
+        return view('livewire.front.contacts-form');
     }
 }
