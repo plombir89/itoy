@@ -79,7 +79,7 @@
     </div>
     <div class="buttons">
         <div class="pull-right">
-            <input type="button" value="{{ __('Confirm Order') }}" class="btn btn-primary" wire:click="confirm">
+            <button class="btn btn-primary" wire:click.prevent="confirm" wire:loading.attr="disabled" ><i class='fa fa-spinner fa-spin mr-2' wire:loading wire:target="confirm"></i>{{ __('Confirm Order') }}</button>
         </div>
     </div>
 

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Basket
 {
@@ -92,6 +93,22 @@ class Basket
         }
 
         $this->order->products->map->save();
+
+        $data['products'] = $this->order->products->map(function($product){
+            return [
+                'title' => $product->item->title,
+                'url' => route('product.show', [app()->getLocale(), $product->item->slug]),
+                'image' => asset('storage/'. $product->img),
+                'price' => $product->price,
+                'code' => $product->code,
+                'count' => $product->pivot->count,
+                'total' => $product->getPriceFrom()
+            ];
+        });
+
+        $data['total'] = $this->order->getFullPrice();
+
+        Mail::send(new \App\Mail\CheckoutForm($data));
 
         session()->forget('orderId');
     }

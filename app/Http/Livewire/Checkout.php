@@ -66,8 +66,9 @@ class Checkout extends Component
         //dd($data);
         if($data['delivery'] != ''){
             $data = Delivery::where('id', $data['delivery'])->first()->toArray();
+            $data['email'] = \auth()->user()->email;
         }
-        //Mail::send(new \App\Mail\ContactsForm($data['name'],$data['email'],$data['phone']));
+
         (new Basket())->confirmOrder($data);
 
         $this->reset();

@@ -38,13 +38,7 @@ class ContactsForm extends Mailable
      */
     public function build()
     {
-        //dd($this->name,$this->phone,$this->email,$this->message);
-//        return $this
-//            ->from('admin@itoy.com')
-//            ->to('info@itoy.com')
-//            ->subject('Message from contacts')->view('emails.contacts');
-
-        return $this->from('admin@itoy.com')
+         return $this->from('admin@itoy.com')
             ->from('admin@itoy.com')
             ->to('info@itoy.com')
             ->markdown('emails.contacts', [
