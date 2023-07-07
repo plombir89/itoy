@@ -38,7 +38,7 @@ class ContactsForm extends Mailable
      */
     public function build()
     {
-         return $this->from(env('MAIL_FROM_ADDRESS'))->to(env('MAIL_TO'))
+         return $this->from('admin@itoy.md')->to('admin@itoy.md')
             ->markdown('emails.contacts', [
                 'name' => $this->name,
                 'phone' => $this->phone,

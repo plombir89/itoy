@@ -32,7 +32,7 @@ class CheckoutForm extends Mailable
      */
     public function build()
     {
-         return $this->to(env('MAIL_TO'))
+         return $this->from('admin@itoy.md')->to('admin@itoy.md')
             ->markdown('emails.checkout', [
                 'name' => $this->data['name'],
                 'phone' => $this->data['phone'],
