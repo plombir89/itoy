@@ -1,4 +1,9 @@
 <form action="#" method="post" class="form-horizontal">
+    @if (session()->has('messageSent'))
+        <div class="alert alert-success">
+            {{ __('Message sent') }}
+        </div>
+    @endif
     <fieldset>
         <legend>{{ __('Contact Form') }}</legend>
         <div class="form-group required @error('name') has-error @enderror">
@@ -41,7 +46,7 @@
     </fieldset>
     <div class="buttons">
         <div class="pull-right">
-            <input class="btn btn-primary" type="submit" wire:click.prevent="send" wire:loading.class="hidden" value="{{ __('Submit') }}">
+            <button class="btn btn-primary" wire:click.prevent="send" wire:loading.attr="disabled" ><i class='fa fa-spinner fa-spin mr-2' wire:loading wire:target="send"></i>{{ __('Submit') }}</button>
         </div>
     </div>
 </form>
